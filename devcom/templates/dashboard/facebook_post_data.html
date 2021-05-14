@@ -1,0 +1,503 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>Facebook</h2>
+            <small>Post Data</small>
+        </div>
+        <br>
+        <a href="{% url 'facebook_page_info' %}">
+          <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">PAGE INFO</button>
+        </a>
+        <a href="{% url 'facebook_post_data' %}">
+          <button class="btn btn-lg bg-deep-orange waves-effect waves-float" type="button" name="button">SURVEY</button>
+        </a>
+        <br>
+        <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TOTAL MESSAGE, RESPONSE AND SURVEY</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="mesres_month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="mesres_semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="mesres_year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="mesresM" height="100"></canvas>
+                      <canvas id="mesresS" height="100"></canvas>
+                      <canvas id="mesresY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>MALE AND FEMALE</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="malefemale_month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="malefemale_semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="malefemale_year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="malefemaleM" height="100"></canvas>
+                      <canvas id="malefemaleS" height="100"></canvas>
+                      <canvas id="malefemaleY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>SURVEY RESULT</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="survey_month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="survey_semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="survey_year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="surveyM" height="100"></canvas>
+                      <canvas id="surveyS" height="100"></canvas>
+                      <canvas id="surveyY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TOP TOPICS</h2>
+                  </div>
+                  <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <thead>
+                                <tr>
+                                  <th>Total Count</th>
+                                  <th>Topic</th>
+                                  <th>Month</th>
+                                  <th>Year</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                  <th>Total Count</th>
+                                  <th>Topic</th>
+                                  <th>Month</th>
+                                  <th>Year</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                              {% for data in toptopics %}
+                                <tr>
+                                  <td>{{ data.total }}</td>
+                                  <td>{{ data.topic }}</td>
+                                  <td>{{ data.month }}</td>
+                                  <td>{{ data.year }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TOP OCCUPATION</h2>
+                  </div>
+                  <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <thead>
+                                <tr>
+                                  <th>Total Count</th>
+                                  <th>Occupation</th>
+                                  <th>Month</th>
+                                  <th>Year</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                  <th>Total Count</th>
+                                  <th>Occupation</th>
+                                  <th>Month</th>
+                                  <th>Year</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                              {% for data in topoccupation %}
+                                <tr>
+                                  <td>{{ data.total }}</td>
+                                  <td>{{ data.occupation }}</td>
+                                  <td>{{ data.month }}</td>
+                                  <td>{{ data.year }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.bundle.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.min.js' %}"></script>
+
+<script type="text/javascript">
+  $(function () {
+      new Chart(document.getElementById("mesresM").getContext("2d"), getChartJs('mesresM'));
+      new Chart(document.getElementById("mesresS").getContext("2d"), getChartJs('mesresS'));
+      new Chart(document.getElementById("mesresY").getContext("2d"), getChartJs('mesresY'));
+      new Chart(document.getElementById("malefemaleM").getContext("2d"), getChartJs('malefemaleM'));
+      new Chart(document.getElementById("malefemaleS").getContext("2d"), getChartJs('malefemaleS'));
+      new Chart(document.getElementById("malefemaleY").getContext("2d"), getChartJs('malefemaleY'));
+      new Chart(document.getElementById("surveyM").getContext("2d"), getChartJs('surveyM'));
+      new Chart(document.getElementById("surveyS").getContext("2d"), getChartJs('surveyS'));
+      new Chart(document.getElementById("surveyY").getContext("2d"), getChartJs('surveyY'));
+  });
+
+  function getChartJs(type) {
+      var config = null;
+
+      if (type === 'mesresM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Response Rate",
+                      data: {{responseRate|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Messages Recieve",
+                      data: {{messagesRecieve|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Total Survey",
+                      data: {{nSurvey|safe}},
+                      backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'mesresS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "Response Rate",
+                      data: {{responseRateS|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Messages Recieve",
+                      data: {{messagesRecieveS|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Total Survey",
+                      data: {{nSurveyS|safe}},
+                      backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'mesresY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "Response Rate",
+                      data: {{responseRateY|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Messages Recieve",
+                      data: {{messagesRecieveY|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Total Survey",
+                      data: {{nSurveyY|safe}},
+                      backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'malefemaleM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Male",
+                      data: {{male|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Female",
+                      data: {{female|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'malefemaleS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "Male",
+                      data: {{maleS|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Female",
+                      data: {{femaleS|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'malefemaleY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "Male",
+                      data: {{maleY|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Female",
+                      data: {{femaleY|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'surveyM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Yes(Q1)",
+                      data: {{nSurveyYes1|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "No(Q1)",
+                      data: {{nSurveyNo1|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Yes(Q2)",
+                      data: {{nSurveyYes2|safe}},
+                      backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                  }, {
+                      label: "No(Q2)",
+                      data: {{nSurveyNo2|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'surveyS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "Yes(Q1)",
+                      data: {{nSurveyYes1S|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "No(Q1)",
+                      data: {{nSurveyNo1S|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Yes(Q2)",
+                      data: {{nSurveyYes2S|safe}},
+                      backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                  }, {
+                      label: "No(Q2)",
+                      data: {{nSurveyNo2S|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'surveyY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "Yes(Q1)",
+                      data: {{nSurveyYes1Y|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "No(Q1)",
+                      data: {{nSurveyNo1Y|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Yes(Q2)",
+                      data: {{nSurveyYes2Y|safe}},
+                      backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                  }, {
+                      label: "No(Q2)",
+                      data: {{nSurveyNo2Y|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+
+      return config;
+  }
+
+</script>
+<script type="text/javascript">
+  $("#mesresS").hide();
+  $("#mesresY").hide();
+
+  $("#malefemaleS").hide();
+  $("#malefemaleY").hide();
+
+  $("#surveyS").hide();
+  $("#surveyY").hide();
+
+  $(document).ready(function(){
+    $("#mesres_month").click(function(){
+      $("#mesresM").show();
+      $("#mesresS").hide();
+      $("#mesresY").hide();
+    })
+    $("#mesres_semester").click(function(){
+      $("#mesresS").show();
+      $("#mesresY").hide();
+      $("#mesresM").hide();
+    })
+    $("#mesres_year").click(function(){
+      $("#mesresY").show();
+      $("#mesresS").hide();
+      $("#mesresM").hide();
+    })
+    $("#malefemale_month").click(function(){
+      $("#malefemaleM").show();
+      $("#malefemaleS").hide();
+      $("#malefemaleY").hide();
+    })
+    $("#malefemale_semester").click(function(){
+      $("#malefemaleS").show();
+      $("#malefemaleY").hide();
+      $("#malefemaleM").hide();
+    })
+    $("#malefemale_year").click(function(){
+      $("#malefemaleY").show();
+      $("#malefemaleS").hide();
+      $("#malefemaleM").hide();
+    })
+    $("#survey_month").click(function(){
+      $("#surveyM").show();
+      $("#surveyS").hide();
+      $("#surveyY").hide();
+    })
+    $("#survey_semester").click(function(){
+      $("#surveyS").show();
+      $("#surveyY").hide();
+      $("#surveyM").hide();
+    })
+    $("#survey_year").click(function(){
+      $("#surveyY").show();
+      $("#surveyS").hide();
+      $("#surveyM").hide();
+    })
+  })
+</script>
+
+{% endblock %}

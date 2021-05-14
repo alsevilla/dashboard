@@ -1,0 +1,1070 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+
+  {% load widget_tweaks %}
+  {% load mathfilters %}
+  {% csrf_token %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+          <h2>KNOWLEDGE PRODUCT STOCKS</h2>
+          <small>Knowledge Products</small>
+          <br>
+          <br>
+          <a href="{% url 'kp_tables' %}">
+            <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">KP Tables</button>
+          </a>
+          <a href="{% url 'kp_stock_view' %}">
+            <button class="btn btn-lg bg-teal waves-effect waves-float" type="button" name="button">KP Stocks</button>
+          </a>
+          </div>
+          <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>ACCORDIONS</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+              <div class="row clearfix">
+                {% for data in accordion %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-red">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                          </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>AR AND MILESTONES</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+              <div class="row clearfix">
+                {% for data in arnm %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-pink">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                          </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>BOOKS</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in book %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-purple">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>BROCHURES AND LEAFLETS</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+              <div class="row clearfix">
+                {% for data in bnl %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-deep-purple">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>CALENDAR</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in calendar %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-indigo">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>COMICS</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+              <div class="row clearfix">
+                {% for data in comic %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-blue">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>FACEBOOK ADS</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in fa %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-light-blue">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>FLIPCHARTS</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+              <div class="row clearfix">
+                {% for data in flipchart %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-cyan">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>HANDOUTS</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in handout %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-teal">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>INFOGRAPHICS</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in infographic %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-green">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>JOURNAL</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in journal %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-light-green">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>MAGASIN</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in magasin %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-lime">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>MAGAZINE</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in magazine %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-grey">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>MANUALS AND FIELD GUIDES</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in mnfg %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-amber">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>POSTER</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in poster %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-orange">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>Q&A</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in qna %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-deep-orange">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>R&D HIGHLIGHTS</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in rndh %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-brown">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>RS4DM</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in rs4dm %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-grey">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>TECHNOGUIDE</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in technoguide %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-blue-grey">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="block-header">
+              <h2>TECHNOLOGY BULLETIN</h2>
+          </div>
+          <div class="col-xs-12">
+            <div class="body">
+              <!-- start of body -->
+                <div class="row clearfix">
+                  {% for data in tb %}
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-toggle='modal' data-target="#{{ data.kp_id }}">
+                        <div class="info-box-2 bg-black">
+                            <div class="icon">
+                                <i class="material-icons">book</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">{{ data.title }}</div>
+                                <div class="number count-to" data-from="0" data-to="{{data.stock|sub:data.distribute}}" data-speed="1000" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ data.kp_id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{data.type}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="body">
+                                      <ul class="list-group">
+                                          <li class="list-group-item">Title: <span class="badge bg-pink">{{data.title}}</span></li>
+                                          <li class="list-group-item">Description: <span class="badge bg-cyan">{{data.description}}</span></li>
+                                          <li class="list-group-item">Total Stocks: <span class="badge bg-teal">{{data.stock|sub:data.distribute}}</span></li>
+                                          <li class="list-group-item">Date Published: <span class="badge bg-orange">{{data.date_record |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Date Revised: <span class="badge bg-orange">{{data.date_revised |  date:"SHORT_DATE_FORMAT"}}</span></li>
+                                          <li class="list-group-item">Recent Printing Press: <span class="badge bg-orange">{{data.printing_press}}</span></li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="{% url 'kp_edit' data.kp_id %}"><button type="button" class="btn btn-link waves-effect">UPDATE</button></a>
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              <!-- end of body -->
+            </div>
+          </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'js/pages/widgets/infobox/infobox-3.js' %}"></script>
+{% endblock %}

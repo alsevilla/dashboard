@@ -1,0 +1,22 @@
+{% extends 'dashboard/main.html' %}
+{% load static %}
+{% block content %}
+
+<section class ="content">
+  <div class="container-fluid">
+    <p>Are you sure to delete this? </p>
+    <form class="" action="{{ url }}" method="POST">
+      {% csrf_token %}
+      <button class="btn btn-warning" type="button" name="button" onclick="goBack()">Cancel</button>
+      <input class="btn btn-danger" type="submit" name="Confirm">
+    </form>
+  </div>
+</section>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+{% endblock %}

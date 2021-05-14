@@ -1,0 +1,220 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>Partners</h2>
+        </div>
+        <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TOTAL NO. OF ENGAGEMENT</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="engagement" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TREND TOTAL NO. OF ENGAGEMENT</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="engagement_trend" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>COUNT BASED ON CLASSIFICATION</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="classification" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>COUNT BASED ON SCOPE</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="scope" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>
+                          PARTNER DATA
+                      </h2>
+                  </div>
+                  <div class="body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                              <thead>
+                                  <tr>
+                                    <th>Year</th>
+                                    <th>Month</th>
+                                    <th>Partner Name</th>
+                                    <th>Type of Engagement</th>
+                                    <th>Location</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                    <th>Year</th>
+                                    <th>Month</th>
+                                    <th>Partner Name</th>
+                                    <th>Type of Engagement</th>
+                                    <th>Location</th>
+                                  </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for data in partner_data %}
+                                  <tr>
+                                    <td> {{ data.year }}</td>
+                                    <td> {{ data.month }}</td>
+                                    <td> {{ data.partner }}</td>
+                                    <td> {{ data.engagement }}</td>
+                                    <td>{{ data.location }}</td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.bundle.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.min.js' %}"></script>
+
+<script type="text/javascript">
+  $(function () {
+      new Chart(document.getElementById("engagement").getContext("2d"), getChartJs('engagement'));
+      new Chart(document.getElementById("engagement_trend").getContext("2d"), getChartJs('engagement_trend'));
+      new Chart(document.getElementById("classification").getContext("2d"), getChartJs('classification'));
+      new Chart(document.getElementById("scope").getContext("2d"), getChartJs('scope'));
+  });
+
+  function getChartJs(type) {
+      var config = null;
+
+      if (type === 'engagement') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Engagements",
+                      data: {{engagement|safe}},
+                      backgroundColor: 'rgba(244, 67, 51, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      // update yearly
+      else if (type === 'engagement_trend') {
+        config = {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+              datasets: [{
+                label: "2021",
+                data: {{engagement_trend_2021|safe}},
+                borderColor: 'rgba(0, 188, 212, 0.75)',
+                backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                pointBorderColor: 'rgba(0, 188, 212, 0)',
+                pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                pointBorderWidth: 1
+              }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+              position: 'top',
+              },
+            }
+        }
+      }
+      // update yearly end
+      else if (type === 'classification') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Media",
+                      data: {{media|safe}},
+                      backgroundColor: 'rgba(244, 67, 51, 0.8)'
+                  }, {
+                          label: "NGO",
+                          data: {{ngo|safe}},
+                          backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                      }, {
+                              label: "Private",
+                              data: {{private|safe}},
+                              backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                          }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'scope') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "National",
+                      data: {{national|safe}},
+                      backgroundColor: 'rgba(244, 67, 51, 0.8)'
+                  }, {
+                          label: "Regional",
+                          data: {{regional|safe}},
+                          backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                      }, {
+                              label: "Community",
+                              data: {{community|safe}},
+                              backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                          }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      return config;
+  }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<form class="" action="" method="POST" enctype="multipart/form-data">
+  {% load widget_tweaks %}
+  {% csrf_token %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+          <button class="pull-right btn btn-circle-lg btn-primary waves-effect waves-circle waves-float" type="submit" name = "submit">
+            <i class="material-icons">done</i>
+          </button>
+          <h2>Input Data</h2>
+          <small>DevCom</small>
+          <br>
+          <br>
+          <a href="{% url 'data_input_progproj' %}">
+            <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">Programs and Projects</button>
+          </a>
+          <a href="{% url 'data_input_publication' %}">
+            <button class="btn btn-lg bg-deep-orange waves-effect waves-float" type="button" name="button">Publication</button>
+          </a>
+          <a href="{% url 'data_input_awards' %}">
+            <button class="btn btn-lg bg-deep-purple waves-effect waves-float" type="button" name="button">Awards</button>
+          </a>
+          <a href="{% url 'data_input_staff' %}">
+            <button class="btn btn-lg bg-indigo waves-effect waves-float" type="button" name="button">Staff</button>
+          </a>
+        </div>
+        <!-- Start of Content -->
+
+        <div class="row clearfix">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="header">
+                        <div class="row clearfix">
+                            <div class="col-xs-12">
+                                <h2>Program and Project</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body">
+                      <!-- start of body -->
+                        <div class="row clearfix">
+                            <div class="col-xs-8">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        {% render_field progproj_form.program class="form-control"%}
+                                        <label class="form-label">Program Title</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        {% render_field progproj_form.budget class="form-control"%}
+                                        <label class="form-label">Budget</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                      <h2 class="card-inside-title"> &nbsp;</h2>
+                                        {% render_field progproj_form.datestart type="date" class="form-control"%}
+                                        <label class="form-label">Date Start</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                      <h2 class="card-inside-title"> &nbsp;</h2>
+                                        {% render_field progproj_form.dateend type="date" class="form-control"%}
+                                        <label class="form-label">Date End</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group form-float">
+                                  <h2 class="card-inside-title"> &nbsp;</h2>
+                                    <div class="form-line">
+                                        {% render_field progproj_form.duration class="form-control"%}
+                                        <label class="form-label">Duration</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-5">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        {% render_field progproj_form.leader class="form-control"%}
+                                        <label class="form-label">Project Leader</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        {% render_field progproj_form.cowork class="form-control"%}
+                                        <label class="form-label">Project Co-Workers</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        {% render_field progproj_form.staff class="form-control"%}
+                                        <label class="form-label">Project Staffs</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                      <h2 class="card-inside-title"> &nbsp;</h2>
+                                        {% render_field progproj_form.protocol class="form-control"%}
+                                        <label class="form-label">Protocol</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                      <h2 class="card-inside-title"> &nbsp;</h2>
+                                        {% render_field progproj_form.ar class="form-control"%}
+                                        <label class="form-label">Annual Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                      <h2 class="card-inside-title"> &nbsp;</h2>
+                                        {% render_field progproj_form.status class="form-control"%}
+                                        <label class="form-label">Status</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                      <h2 class="card-inside-title"> &nbsp;</h2>
+                                        {% render_field progproj_form.quarter class="form-control"%}
+                                        <label class="form-label">Quarter</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group form-float">
+                                  <h2 class="card-inside-title"> &nbsp;</h2>
+                                    <div class="form-line">
+                                        {% render_field progproj_form.year class="form-control"%}
+                                        <label class="form-label">Year</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <!-- end of body -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End of Content -->
+    </div>
+</section>
+</form>
+
+{% endblock %}

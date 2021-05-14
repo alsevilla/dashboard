@@ -1,0 +1,335 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>PhilRice Website</h2>
+            <small>Website</small>
+        </div>
+        <br>
+        <a href="{% url 'pw_table' %}">
+          <button class="btn btn-lg bg-deep-orange waves-effect waves-float" type="button" name="button">Website</button>
+        </a>
+        <a href="{% url 'pw_visitor_table' %}">
+          <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">Visitor</button>
+        </a>
+        <br>
+        <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TREND NO. OF UPLOADED STORIES</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="stories_trend" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TOTAL OF ALL STORIES BY CLASSIFICATION</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="classification" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TOTAL OF ALL STORIES BY MOOD</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="mood" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>
+                          DATA PER STORY (FEATURES)
+                      </h2>
+                  </div>
+                  <div class="body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                              <thead>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Topic</th>
+                                    <th>Fascinated</th>
+                                    <th>Amused</th>
+                                    <th>Excited</th>
+                                    <th>Angry</th>
+                                    <th>Sad</th>
+                                    <th>Bored</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Topic</th>
+                                    <th>Fascinated</th>
+                                    <th>Amused</th>
+                                    <th>Excited</th>
+                                    <th>Angry</th>
+                                    <th>Sad</th>
+                                    <th>Bored</th>
+                                  </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for data in pw_data_features %}
+                                  <tr>
+                                    <td> {{ data.date }}</td>
+                                    <td> {{ data.title }}</td>
+                                    <td> {{ data.topic }}</td>
+                                    <td> {{ data.fascinated }}</td>
+                                    <td> {{ data.amused }}</td>
+                                    <td> {{ data.excited }}</td>
+                                    <td> {{ data.angry }}</td>
+                                    <td> {{ data.sad }}</td>
+                                    <td> {{ data.bored }}</td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>
+                          DATA PER STORY (NEWS)
+                      </h2>
+                  </div>
+                  <div class="body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                              <thead>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Topic</th>
+                                    <th>Fascinated</th>
+                                    <th>Amused</th>
+                                    <th>Excited</th>
+                                    <th>Angry</th>
+                                    <th>Sad</th>
+                                    <th>Bored</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Topic</th>
+                                    <th>Fascinated</th>
+                                    <th>Amused</th>
+                                    <th>Excited</th>
+                                    <th>Angry</th>
+                                    <th>Sad</th>
+                                    <th>Bored</th>
+                                  </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for data in pw_data_news %}
+                                  <tr>
+                                    <td> {{ data.date }}</td>
+                                    <td> {{ data.title }}</td>
+                                    <td> {{ data.topic }}</td>
+                                    <td> {{ data.fascinated }}</td>
+                                    <td> {{ data.amused }}</td>
+                                    <td> {{ data.excited }}</td>
+                                    <td> {{ data.angry }}</td>
+                                    <td> {{ data.sad }}</td>
+                                    <td> {{ data.bored }}</td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>
+                          DATA PER STORY (PHOTO NEWS)
+                      </h2>
+                  </div>
+                  <div class="body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                              <thead>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Topic</th>
+                                    <th>Fascinated</th>
+                                    <th>Amused</th>
+                                    <th>Excited</th>
+                                    <th>Angry</th>
+                                    <th>Sad</th>
+                                    <th>Bored</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                    <th>Date</th>
+                                    <th>Title</th>
+                                    <th>Topic</th>
+                                    <th>Fascinated</th>
+                                    <th>Amused</th>
+                                    <th>Excited</th>
+                                    <th>Angry</th>
+                                    <th>Sad</th>
+                                    <th>Bored</th>
+                                  </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for data in pw_data_photonews %}
+                                  <tr>
+                                    <td> {{ data.date }}</td>
+                                    <td> {{ data.title }}</td>
+                                    <td> {{ data.topic }}</td>
+                                    <td> {{ data.fascinated }}</td>
+                                    <td> {{ data.amused }}</td>
+                                    <td> {{ data.excited }}</td>
+                                    <td> {{ data.angry }}</td>
+                                    <td> {{ data.sad }}</td>
+                                    <td> {{ data.bored }}</td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.bundle.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.min.js' %}"></script>
+
+<script type="text/javascript">
+  $(function () {
+      new Chart(document.getElementById("stories_trend").getContext("2d"), getChartJs('stories_trend'));
+      new Chart(document.getElementById("classification").getContext("2d"), getChartJs('classification'));
+      new Chart(document.getElementById("mood").getContext("2d"), getChartJs('mood'));
+  });
+
+  function getChartJs(type) {
+      var config = null;
+
+      // Update yearly
+      if (type === 'stories_trend') {
+        config = {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+              datasets: [{
+                label: "2021",
+                data: {{stories_trend_2021|safe}},
+                borderColor: 'rgba(0, 188, 212, 0.75)',
+                backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                pointBorderColor: 'rgba(0, 188, 212, 0)',
+                pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                pointBorderWidth: 1
+              }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+              position: 'top',
+              },
+            }
+        }
+      }
+      // Update yearly end
+      else if (type === 'classification') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "News",
+                      data: {{news|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                          label: "Photo News",
+                          data: {{photonews|safe}},
+                          backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                      }, {
+                              label: "Features",
+                              data: {{feature|safe}},
+                              backgroundColor: 'rgba(139, 195, 73, 0.8)'
+                          }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'mood') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Fascinated",
+                      data: {{fascinated|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                          label: "Amused",
+                          data: {{amused|safe}},
+                          backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                      }, {
+                              label: "Excited",
+                              data: {{excited|safe}},
+                              backgroundColor: 'rgba(139, 195, 73, 0.8)'
+                          }, {
+                                  label: "Angry",
+                                  data: {{angry|safe}},
+                                  backgroundColor: 'rgba(255, 193, 7, 0.8)'
+                                }, {
+                                          label: "Sad",
+                                          data: {{sad|safe}},
+                                          backgroundColor: 'rgba(0, 150, 136, 0.8)'
+                                      }, {
+                                              label: "Bored",
+                                              data: {{bored|safe}},
+                                              backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                                          }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      return config;
+  }
+
+</script>
+
+{% endblock %}

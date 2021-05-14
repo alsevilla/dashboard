@@ -1,0 +1,516 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>PhilRice Text Center</h2>
+        </div>
+        <br>
+        <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TOTAL REGISTERED USERS</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="total_user" height="200"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>NO. OF SMS RECIEVE PER YEAR</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="sms_yr" height="200"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>Ave. DAILY ACTIVE TEXTERS (WEEKDAYS)</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="sms_daily_yr" height="200"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>NO. OF KEYWORDS RECIEVED</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="sms_keyword_yr" height="200"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2> RESPONSE RATE (OFFICE HOUR)</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="response_OH_yr" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2> RESPONSE RATE (NON OFFICE HOUR)</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="response_NOH_yr" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2> RESPONSE RATE (WEEKENDS)</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="response_WE_yr" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2> TOTAL REGISTRANTS BY GENDER </h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="gender_yr" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2> AVE. NO. OF  SMS RECIEVED </h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="sms_ave_yr" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>NO. OF ACTIVE TEXTERS</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="texter_yr" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TOTAL PTC RECIEVED</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="total_ptc" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2> SMS CLASSIFICATIONS(RANK BY TOTAL COUNT) </h2>
+                  </div>
+                  <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <thead>
+                                <tr>
+                                  <th>Total Count</th>
+                                  <th>Classification</th>
+                                  <th>Year</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                  <th>Total Count</th>
+                                  <th>Classification</th>
+                                  <th>Year</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                              {% for data in sms_yr %}
+                                <tr>
+                                  <td>{{ data.total }}</td>
+                                  <td>{{ data.description }}</td>
+                                  <td>{{ data.year }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>LOCATIONS WITH HIGHEST REGISTERED CLIENT </h2>
+                  </div>
+                  <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <thead>
+                                <tr>
+                                  <th>Total Count</th>
+                                  <th>Location</th>
+                                  <th>Year</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                  <th>Total Count</th>
+                                  <th>Location</th>
+                                  <th>Year</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                              {% for data in location %}
+                                <tr>
+                                  <td>{{ data.total }}</td>
+                                  <td>{{ data.description }}</td>
+                                  <td>{{ data.year }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.bundle.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.min.js' %}"></script>
+
+<script type="text/javascript">
+  $(function () {
+      new Chart(document.getElementById("total_user").getContext("2d"), getChartJs('total_user'));
+      new Chart(document.getElementById("sms_yr").getContext("2d"), getChartJs('sms_yr'));
+      new Chart(document.getElementById("sms_daily_yr").getContext("2d"), getChartJs('sms_daily_yr'));
+      new Chart(document.getElementById("response_OH_yr").getContext("2d"), getChartJs('response_OH_yr'));
+      new Chart(document.getElementById("response_NOH_yr").getContext("2d"), getChartJs('response_NOH_yr'));
+      new Chart(document.getElementById("response_WE_yr").getContext("2d"), getChartJs('response_WE_yr'));
+      new Chart(document.getElementById("gender_yr").getContext("2d"), getChartJs('gender_yr'));
+      new Chart(document.getElementById("sms_keyword_yr").getContext("2d"), getChartJs('sms_keyword_yr'));
+      new Chart(document.getElementById("sms_ave_yr").getContext("2d"), getChartJs('sms_ave_yr'));
+      new Chart(document.getElementById("texter_yr").getContext("2d"), getChartJs('texter_yr'));
+      new Chart(document.getElementById("total_ptc").getContext("2d"), getChartJs('total_ptc'));
+  });
+
+
+  function getChartJs(type) {
+      var config = null;
+
+      if (type === 'total_user') {
+          config = {
+              type: 'line',
+              data: {
+                labels: {{year_location|safe}},
+                datasets: [{
+                    label: "Total Registered users",
+                    data: {{total_location|safe}},
+                    backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: '',
+                },
+              }
+          }
+      }
+      else if (type === 'sms_yr') {
+          config = {
+              type: 'line',
+              data: {
+                labels: {{ptc_year|safe}},
+                datasets: [{
+                    label: "Total SMS Recieved",
+                    data: {{sms|safe}},
+                    backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: '',
+                },
+              }
+          }
+      }
+      else if (type === 'sms_daily_yr') {
+          config = {
+              type: 'line',
+              data: {
+                labels: {{ptc_year|safe}},
+                datasets: [{
+                    label: "Daily Average",
+                    data: {{texterWE|safe}},
+                    backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: '',
+                },
+              }
+          }
+      }
+      else if (type === 'sms_keyword_yr') {
+          config = {
+              type: 'line',
+              data: {
+                labels: {{ptc_year|safe}},
+                datasets: [{
+                    label: "Keywords recieved",
+                    data: {{keywords|safe}},
+                    backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: '',
+                },
+              }
+          }
+      }
+      else if (type === 'response_OH_yr') {
+          config = {
+              type: 'bar',
+              data: {
+                labels: {{OHyear|safe}},
+                datasets: [{
+                    label: "1-15min",
+                    data: {{OH1to15|safe}},
+                    backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                }, {
+                    label: "16min-1h",
+                    data: {{OH16to1h|safe}},
+                    backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                }, {
+                    label: "1h-4h",
+                    data: {{OH1hto4h|safe}},
+                    backgroundColor: 'rgba(155, 39, 176, 0.8)'
+                }, {
+                    label: "4h-12h",
+                    data: {{OH4hto12h|safe}},
+                    backgroundColor: 'rgba(104, 58, 183, 0.8)'
+                }, {
+                    label: "12h+",
+                    data: {{OH12up|safe}},
+                    backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'response_NOH_yr') {
+          config = {
+              type: 'bar',
+              data: {
+                labels: {{NOHyear|safe}},
+                datasets: [{
+                    label: "1-15min",
+                    data: {{NOH1to15|safe}},
+                    backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                }, {
+                    label: "16min-1h",
+                    data: {{NOH16to1h|safe}},
+                    backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                }, {
+                    label: "1h-4h",
+                    data: {{NOH1hto4h|safe}},
+                    backgroundColor: 'rgba(155, 39, 176, 0.8)'
+                }, {
+                    label: "4h-12h",
+                    data: {{NOH4hto12h|safe}},
+                    backgroundColor: 'rgba(104, 58, 183, 0.8)'
+                }, {
+                    label: "12h+",
+                    data: {{NOH12up|safe}},
+                    backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'response_WE_yr') {
+          config = {
+              type: 'bar',
+              data: {
+                labels: {{WOHyear|safe}},
+                datasets: [{
+                    label: "1-15min",
+                    data: {{WOH1to15|safe}},
+                    backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                }, {
+                    label: "16min-1h",
+                    data: {{WOH16to1h|safe}},
+                    backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                }, {
+                    label: "1h-4h",
+                    data: {{WOH1hto4h|safe}},
+                    backgroundColor: 'rgba(155, 39, 176, 0.8)'
+                }, {
+                    label: "4h-12h",
+                    data: {{WOH4hto12h|safe}},
+                    backgroundColor: 'rgba(104, 58, 183, 0.8)'
+                }, {
+                    label: "12h+",
+                    data: {{WOH12up|safe}},
+                    backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'gender_yr') {
+          config = {
+              type: 'bar',
+              data: {
+                labels: {{ptc_year|safe}},
+                datasets: [{
+                    label: "Male",
+                    data: {{male|safe}},
+                    backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                }, {
+                    label: "Female",
+                    data: {{female|safe}},
+                    backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'sms_ave_yr') {
+          config = {
+              type: 'bar',
+              data: {
+                labels: {{ptc_year|safe}},
+                datasets: [{
+                    label: "Weekdays",
+                    data: {{smsWD|safe}},
+                    backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                }, {
+                    label: "Weekends",
+                    data: {{smsWE|safe}},
+                    backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'texter_yr') {
+          config = {
+              type: 'bar',
+              data: {
+                labels: {{ptc_year|safe}},
+                datasets: [{
+                    label: "Office hrs",
+                    data: {{texterOH|safe}},
+                    backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                }, {
+                    label: "Non-office hrs",
+                    data: {{texterNOH|safe}},
+                    backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                }, {
+                    label: "Weekends",
+                    data: {{texterWD|safe}},
+                    backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      // need to edit this annually
+      //add new data for consecutive year
+      else if (type === 'total_ptc') {
+          config = {
+              type: 'line',
+              data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    label: "2020",
+                    data: {{yr2020_data|safe}},
+                    borderColor: 'rgba(0, 188, 212, 0.75)',
+                    backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                    pointBorderColor: 'rgba(0, 188, 212, 0)',
+                    pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                    pointBorderWidth: 1
+                },{
+                  label: "2021",
+                  data: {{yr2021_data|safe}},
+                  borderColor: 'rgba(233, 30, 99, 0.75)',
+                  backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                  pointBorderColor: 'rgba(233, 30, 99, 0)',
+                  pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                  pointBorderWidth: 1
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      return config;
+  }
+
+</script>
+
+{% endblock %}

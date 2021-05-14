@@ -1,0 +1,66 @@
+{% extends 'dashboard/main.html' %}
+{% load static %}
+{% block content %}
+
+<section class ="content">
+    <div class ="container-fluid">
+        <div class="block-header">
+            <h2>Page Info</h2>
+            <small>Facebook</small>
+            <br>
+            <br>
+            <a href="{% url 'fb_page_infos' %}">
+              <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">PAGE INFO</button>
+            </a>
+            <a href="{% url 'fb_post_data' %}">
+              <button class="btn btn-lg bg-deep-orange waves-effect waves-float" type="button" name="button">SURVEY</button>
+            </a>
+        </div>
+        <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Data
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                      <th>ID</th>
+                                      <th>description</th>
+                                      <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                      <th>ID</th>
+                                      <th>description</th>
+                                      <th>Actions</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                  {% for data in page_info %}
+                                    <tr>
+                                      <td>{{ data.id }}</td>
+                                      <td>Facebook Page Info Data <b>{{ data.month }} - {{ data.year }}</b></td>
+                                      <td> <a href="{% url 'fb_page_infos_edit' data.id %}"><button class="btn btn-xs btn-success" type="button"><i class="material-icons">mode_edit</i></button></a>
+                                             <a href="{% url 'fb_page_infos_delete' data.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% endblock %}

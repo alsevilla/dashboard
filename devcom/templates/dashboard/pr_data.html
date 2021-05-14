@@ -1,0 +1,168 @@
+{% extends 'dashboard/main.html' %}
+{% load static %}
+{% block content %}
+
+<section class ="content">
+    <div class ="container-fluid">
+        <div class="block-header">
+            <h2>PhilRice Website</h2>
+            <br>
+            <a href="{% url 'pr_visitor' %}">
+              <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">Visitor</button>
+            </a>
+            <a href="{% url 'pr_upload' %}">
+              <button class="btn btn-lg bg-deep-orange waves-effect waves-float" type="button" name="button">Upload</button>
+            </a>
+            <br>
+            <br>
+
+        </div>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>
+                        RECORD
+                      </h2>
+                  </div>
+                  <div class="body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                              <thead>
+                                  <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                  </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for texts in text %}
+                                  <tr>
+                                    <td>{{ texts.id }}</td>
+                                    <td>PRKB Data on <b>{{ texts.month }} - {{ texts.year }}</b></td>
+                                    <td> <a href="{% url 'pr_visitor_edit' texts.id %}"><button class="btn btn-xs btn-success" type="button"><i class="material-icons">mode_edit</i></button></a>
+                                           <a href="{% url 'pr_visitor_delete' texts.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>
+                          Visitor Location Data
+                      </h2>
+                  </div>
+                  <div class="body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                              <thead>
+                                  <tr>
+                                    <th>ID</th>
+                                    <th>Location 1</th>
+                                    <th>#</th>
+                                    <th>Location 2</th>
+                                    <th>#</th>
+                                    <th>Location 3</th>
+                                    <th>#</th>
+                                    <th>Location 4</th>
+                                    <th>#</th>
+                                    <th>Location 5</th>
+                                    <th>#</th>
+                                    <th>Location 6</th>
+                                    <th>#</th>
+                                    <th>Location 7</th>
+                                    <th>#</th>
+                                    <th>Location 8</th>
+                                    <th>#</th>
+                                    <th>Location 9</th>
+                                    <th>#</th>
+                                    <th>Location 10</th>
+                                    <th>#</th>
+                                    <th>Quarter</th>
+                                    <th>Year</th>
+                                    <th>Actions</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                    <th>ID</th>
+                                    <th>Location 1</th>
+                                    <th>#</th>
+                                    <th>Location 2</th>
+                                    <th>#</th>
+                                    <th>Location 3</th>
+                                    <th>#</th>
+                                    <th>Location 4</th>
+                                    <th>#</th>
+                                    <th>Location 5</th>
+                                    <th>#</th>
+                                    <th>Location 6</th>
+                                    <th>#</th>
+                                    <th>Location 7</th>
+                                    <th>#</th>
+                                    <th>Location 8</th>
+                                    <th>#</th>
+                                    <th>Location 9</th>
+                                    <th>#</th>
+                                    <th>Location 10</th>
+                                    <th>#</th>
+                                    <th>Quarter</th>
+                                    <th>Year</th>
+                                    <th>Actions</th>
+                                  </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for texts in text %}
+                                  <tr>
+                                    <td>{{ texts.id }}</td>
+                                    <td>{{ texts.location1 }}</td>
+                                    <td>{{ texts.nlocation1 }}</td>
+                                    <td>{{ texts.location2 }}</td>
+                                    <td>{{ texts.nlocation2 }}</td>
+                                    <td>{{ texts.location3 }}</td>
+                                    <td>{{ texts.nlocation3 }}</td>
+                                    <td>{{ texts.location4 }}</td>
+                                    <td>{{ texts.nlocation4 }}</td>
+                                    <td>{{ texts.location5 }}</td>
+                                    <td>{{ texts.nlocation5 }}</td>
+                                    <td>{{ texts.location6 }}</td>
+                                    <td>{{ texts.nlocation6 }}</td>
+                                    <td>{{ texts.location7 }}</td>
+                                    <td>{{ texts.nlocation7 }}</td>
+                                    <td>{{ texts.location8 }}</td>
+                                    <td>{{ texts.nlocation8 }}</td>
+                                    <td>{{ texts.location9 }}</td>
+                                    <td>{{ texts.nlocation9 }}</td>
+                                    <td>{{ texts.location10 }}</td>
+                                    <td>{{ texts.nlocation10 }}</td>
+                                    <td>{{ texts.quarter }}</td>
+                                    <td>{{ texts.year }}</td>
+                                    <td> <a href="{% url 'pr_visitor_edit' texts.id %}"><button class="btn btn-xs btn-success" type="button"><i class="material-icons">mode_edit</i></button></a>
+                                           <a href="{% url 'pr_visitor_delete' texts.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div> -->
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,244 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<form class="" action="" method="POST">
+  {% load widget_tweaks %}
+  {% csrf_token %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+          <button class="pull-right btn btn-circle-lg btn-primary waves-effect waves-circle waves-float" type="submit" name = "submit">
+            <i class="material-icons">done</i>
+          </button>
+          <h2>Input Data</h2>
+          <small>Knowledge Products</small>
+          <br>
+          <br>
+          <a href="{% url 'data_input_kp' %}">
+            <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">Manage KPs</button>
+          </a>
+          <a href="{% url 'data_input_kp_stock' %}">
+            <button class="btn btn-lg bg-teal waves-effect waves-float" type="button" name="button">Add KPs Stocks</button>
+          </a>
+          <a href="{% url 'data_input_kp_recipient' %}">
+            <button class="btn btn-lg bg-deep-purple waves-effect waves-float" type="button" name="button">Manage Recipients</button>
+          </a>
+
+          </div>
+        <!-- Start of Content -->
+
+        <div class="row clearfix">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="header">
+                        <div class="row clearfix">
+                            <div class="col-xs-12">
+                                <h2>Requesting Party</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body">
+                      <!-- start of body -->
+                        <div class="row clearfix">
+                          <div class="col-xs-4">
+                              <div class="form-group form-float">
+                                <h2 class="card-inside-title"> &nbsp;</h2>
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.date type="date" class="form-control"%}
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-8">
+                              <div class="form-group form-float">
+                                <h2 class="card-inside-title"> &nbsp;</h2>
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.purpose class="form-control"%}
+                                    <label class="form-label">Purpose</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-6">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.requester_name class="form-control"%}
+                                    <label class="form-label">Request By:</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-6">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.requester_contact class="form-control"%}
+                                    <label class="form-label">Contact #:</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-6">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.requester_division class="form-control"%}
+                                    <label class="form-label">Division/Department/Unit:</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-6">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.distributer_name class="form-control"%}
+                                    <label class="form-label">Distributer Name</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                      <!-- end of body -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="header">
+                        <div class="row clearfix">
+                            <div class="col-xs-12">
+                                <h2>Recipients Party</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body">
+                      <!-- start of body -->
+                        <div class="row clearfix">
+                          <div class="col-xs-8">
+                              <div class="form-group form-float">
+                                <h2 class="card-inside-title"> &nbsp;</h2>
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.recipient_name class="form-control"%}
+                                    <label class="form-label">Recipients</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-4">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    <h2 class="card-inside-title"> &nbsp;</h2>
+                                    {% render_field kp_request_form.recipient_occupation class="form-control"%}
+                                    <label class="form-label">Occupation</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-6">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.recipient_male class="form-control"%}
+                                    <label class="form-label">Male</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-6">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.recipient_female class="form-control"%}
+                                    <label class="form-label">Female</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-6">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    {% render_field kp_request_form.recipient_province class="form-control"%}
+                                    <label class="form-label">Province</label>
+                                  </div>
+                              </div>
+                          </div>
+                          {% render_field kp_request_form.datefortable class="form-control" type="hidden" %}
+                          {% render_field kp_request_form.monthfortable class="form-control" type="hidden" %}
+
+                        </div>
+                      <!-- end of body -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            &nbsp;
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                      <th>Date</th>
+                                      <th>Requestee</th>
+                                      <th>Division</th>
+                                      <th>Contact</th>
+                                      <th>Distributer Name</th>
+                                      <th>Recipient</th>
+                                      <th>Occupation</th>
+                                      <th>Male</th>
+                                      <th>Female</th>
+                                      <th>Province</th>
+                                      <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                      <th>Date</th>
+                                      <th>Requestee</th>
+                                      <th>Division</th>
+                                      <th>Contact</th>
+                                      <th>Distributer Name</th>
+                                      <th>Recipient</th>
+                                      <th>Occupation</th>
+                                      <th>Male</th>
+                                      <th>Female</th>
+                                      <th>Province</th>
+                                      <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                  {% for kp_request_tables in kp_request_table %}
+                                    <tr>
+                                      <td> {{ kp_request_tables.date | date:"SHORT_DATE_FORMAT" }}</td>
+                                      <td><a href="{% url 'data_input_kp_distribute' kp_request_tables.id %}">{{ kp_request_tables.requester_name }}</a></td>
+                                      <td>{{ kp_request_tables.requester_division }}</td>
+                                      <td>{{ kp_request_tables.requester_contact }}</td>
+                                      <td>{{ kp_request_tables.distributer_name }}</td>
+                                      <td>{{ kp_request_tables.recipient_name }}</td>
+                                      <td>{{ kp_request_tables.recipient_occupation }}</td>
+                                      <td>{{ kp_request_tables.recipient_male }}</td>
+                                      <td>{{ kp_request_tables.recipient_female }}</td>
+                                      <td>{{ kp_request_tables.recipient_province }}</td>
+                                      <td><a href="{% url 'kp_recipient_edit' kp_request_tables.id %}"><button class="btn btn-xs btn-success" type="button"><i class="material-icons">mode_edit</i></button></a>
+                                            <a href="{% url 'kp_recipient_delete' kp_request_tables.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End of Content -->
+    </div>
+    {% load static %}
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <script type="text/javascript">
+
+      $("#id_date").change(function () {
+        var x = document.getElementById("id_date").value;
+        var dateObj = new Date(x);
+        var year = dateObj.getFullYear();
+        var month = dateObj.getMonth() + 1;
+
+        $("#id_monthfortable").val(month);
+        $("#id_datefortable").val(year);
+      })
+    </script>
+</section>
+</form>
+
+{% endblock %}

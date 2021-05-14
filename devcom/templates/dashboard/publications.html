@@ -1,0 +1,84 @@
+{% extends 'dashboard/main.html' %}
+{% load static %}
+{% block content %}
+
+<section class ="content">
+    <div class ="container-fluid">
+        <div class="block-header">
+            <h2>Publication</h2>
+        </div>
+        <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            List of Publications
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                        <th>Journal</th>
+                                        <th>Title</th>
+                                        <th>Volume</th>
+                                        <th>Author</th>
+                                        <th>Publisher</th>
+                                        <th>Date Publish</th>
+                                        <th>Publish Location</th>
+                                        <th>Date Conference</th>
+                                        <th>Location Conference</th>
+                                        <th>Quarter</th>
+                                        <th>Year</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                      <th>Journal</th>
+                                      <th>Title</th>
+                                      <th>Volume</th>
+                                      <th>Author</th>
+                                      <th>Publisher</th>
+                                      <th>Date Publish</th>
+                                      <th>Publish Location</th>
+                                      <th>Date Conference</th>
+                                      <th>Location Conference</th>
+                                      <th>Quarter</th>
+                                      <th>Year</th>
+                                      <th>Actions</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                  {% for books in book %}
+                                    <tr>
+                                        <td>{{ books.journal }}</td>
+                                        <td>{{ books.title }}</td>
+                                        <td>{{ books.volume }}</td>
+                                        <td>{{ books.author }}</td>
+                                        <td>{{ books.publisher }}</td>
+                                        <td>{{ books.datepublish }}</td>
+                                        <td>{{ books.publishlocation }}</td>
+                                        <td>{{ books.dateconference }}</td>
+                                        <td>{{ books.locationconference }}</td>
+                                        <td>{{ books.quarter }}</td>
+                                        <td>{{ books.year }}</td>
+                                        <td> <a href="{% url 'publications_edit' books.id %}"><button class="btn btn-xs btn-success" type="button"><i class="material-icons">mode_edit</i></button></a>
+                                             <a href="{% url 'publications_delete' books.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% endblock %}

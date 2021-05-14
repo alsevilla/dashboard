@@ -1,0 +1,613 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+          <h2>KNOWLEDGE PRODUCT</h2>
+          <small>Knowledge Products</small>
+          <br>
+          <br>
+          <a href="{% url 'kp_tables' %}">
+            <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">KP Tables</button>
+          </a>
+          <a href="{% url 'kp_stock_view' %}">
+            <button class="btn btn-lg bg-teal waves-effect waves-float" type="button" name="button">KP Stocks</button>
+          </a>
+          </div>
+          <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-sm-6 col-xs-12">
+            <div class="card">
+              <div class="header">
+                <h2>TOTAL DISTRIBUTED KP</h2>
+              </div>
+              <div class="body">
+                <canvas id="distribution_table" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xs-12">
+            <div class="card">
+              <div class="header">
+                <h2>TOTAL KP PRODUCED</h2>
+              </div>
+              <div class="body">
+                <canvas id="produced_table" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xs-12">
+            <div class="card">
+              <div class="header">
+                <h2>TOTAL KP REQUEST</h2>
+              </div>
+              <div class="body">
+                <canvas id="request_table" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xs-12">
+            <div class="card">
+              <div class="header">
+                <h2>TOTAL RECIEPIENTS</h2>
+              </div>
+              <div class="body">
+                <canvas id="reciepients_table" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="card">
+              <div class="header">
+                <h2>MALE AND FEMALE RATIO</h2>
+              </div>
+              <div class="body">
+                <canvas id="gender_table" height="100"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>DISTRIBUTED KP</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="distribute_kp" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>KP PRODUCED</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="produced_kp" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>KP REQUEST</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="request_kp" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>RECIEPIENTS</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="recipient" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="card">
+              <div class="header">
+                <h2>KP REQUEST CLASSIFICATION</h2>
+              </div>
+              <div class="body">
+                <canvas id="occupation_table" height="auto"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="card">
+              <div class="header">
+                <h2>KP PRODUCED</h2>
+              </div>
+              <div class="body">
+                <canvas id="kp_table" height="auto"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>
+                          TOP LOCATIONS
+                      </h2>
+                  </div>
+                  <div class="body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                              <thead>
+                                  <tr>
+                                    <th>Count</th>
+                                    <th>Location</th>
+                                    <th>Month</th>
+                                    <th>Year</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                    <th>Count</th>
+                                    <th>Location</th>
+                                    <th>Month</th>
+                                    <th>Year</th>
+                                  </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for data in top_location %}
+                                  <tr>
+                                    <td> {{ data.total }}</td>
+                                    <td> {{ data.recipient_province }}</td>
+                                    <td> {{ data.monthfortable }} </td>
+                                    <td> {{ data.datefortable }}</td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+    {% load static %}
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'plugins/chartjs/Chart.bundle.js' %}"></script>
+    <script src="{% static 'plugins/chartjs/Chart.min.js' %}"></script>
+
+    <script type="text/javascript">
+      $(function () {
+          new Chart(document.getElementById("distribution_table").getContext("2d"), getChartJs('distribution_table'));
+          new Chart(document.getElementById("produced_table").getContext("2d"), getChartJs('produced_table'));
+          new Chart(document.getElementById("request_table").getContext("2d"), getChartJs('request_table'));
+          new Chart(document.getElementById("reciepients_table").getContext("2d"), getChartJs('reciepients_table'));
+          new Chart(document.getElementById("gender_table").getContext("2d"), getChartJs('gender_table'));
+          new Chart(document.getElementById("distribute_kp").getContext("2d"), getChartJs('distribute_kp'));
+          new Chart(document.getElementById("produced_kp").getContext("2d"), getChartJs('produced_kp'));
+          new Chart(document.getElementById("request_kp").getContext("2d"), getChartJs('request_kp'));
+          new Chart(document.getElementById("recipient").getContext("2d"), getChartJs('recipient'));
+          new Chart(document.getElementById("occupation_table").getContext("2d"), getChartJs('occupation_table'));
+          new Chart(document.getElementById("kp_table").getContext("2d"), getChartJs('kp_table'));
+      });
+
+      function getChartJs(type) {
+          var config = null;
+
+          if (type === 'distribution_table') {
+              config = {
+                  type: 'bar',
+                  data: {
+                    labels: {{distribute_year|safe}},
+                    datasets: [{
+                        label: "Distributed",
+                        data: {{distributed|safe}},
+                        backgroundColor: 'rgba(244, 67, 51, 0.8)'
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: '',
+                    },
+                  }
+              }
+          }
+          else if (type === 'produced_table') {
+              config = {
+                  type: 'bar',
+                  data: {
+                    labels: {{total_kp_date|safe}},
+                    datasets: [{
+                        label: "Produced",
+                        data: {{total_kp|safe}},
+                        backgroundColor: 'rgba(244, 67, 51, 0.8)'
+                    }]
+                  },
+                  options: {
+                    responsive: true,
+                    legend: {
+                      position: '',
+                    },
+                  }
+              }
+          }
+          else if (type === 'request_table') {
+              config = {
+                  type: 'bar',
+                  data: {
+                    labels: {{total_request_date|safe}},
+                    datasets: [{
+                        label: "Request",
+                        data: {{total_request|safe}},
+                        backgroundColor: 'rgba(244, 67, 51, 0.8)'
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: '',
+                    },
+                  }
+              }
+          }
+          else if (type === 'reciepients_table') {
+              config = {
+                  type: 'bar',
+                  data: {
+                    labels: {{Total_datefortable|safe}},
+                    datasets: [{
+                        label: "Reciepients",
+                        data: {{Total|safe}},
+                        backgroundColor: 'rgba(244, 67, 51, 0.8)'
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: '',
+                    },
+                  }
+              }
+          }
+          else if (type === 'gender_table') {
+              config = {
+                  type: 'bar',
+                  data: {
+                    labels: {{Datefortable|safe}},
+                    datasets: [{
+                        label: "Male",
+                        data: {{Male|safe}},
+                        backgroundColor: 'rgba( 33, 150, 243, 0.8)'
+                    }, {
+                          label: "Female",
+                          data: {{Female|safe}},
+                          backgroundColor: 'rgba( 244, 67, 54, 0.8)'
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: 'top',
+                    },
+                  }
+              }
+          }
+          // need to edit this annually
+          //add new data for consecutive year
+          else if (type === 'distribute_kp') {
+              config = {
+                  type: 'line',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: "2020",
+                        data: {{distribute_yr2020_data|safe}},
+                        borderColor: 'rgba(0, 188, 212, 0.75)',
+                        backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                        pointBorderColor: 'rgba(0, 188, 212, 0)',
+                        pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                        pointBorderWidth: 1
+                    },{
+                        label: "2021",
+                        data: {{distribute_yr2021_data|safe}},
+                        borderColor: 'rgba(233, 30, 99, 0.75)',
+                        backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                        pointBorderColor: 'rgba(233, 30, 99, 0)',
+                        pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                        pointBorderWidth: 1
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: 'top',
+                    },
+                  }
+              }
+          }
+          else if (type === 'produced_kp') {
+              config = {
+                  type: 'line',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: "2020",
+                        data: {{produce_yr2020_data|safe}},
+                        borderColor: 'rgba(0, 188, 212, 0.75)',
+                        backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                        pointBorderColor: 'rgba(0, 188, 212, 0)',
+                        pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                        pointBorderWidth: 1
+                    },{
+                        label: "2021",
+                        data: {{produce_yr2021_data|safe}},
+                        borderColor: 'rgba(233, 30, 99, 0.75)',
+                        backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                        pointBorderColor: 'rgba(233, 30, 99, 0)',
+                        pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                        pointBorderWidth: 1
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: 'top',
+                    },
+                  }
+              }
+          }
+          else if (type === 'request_kp') {
+              config = {
+                  type: 'line',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: "2020",
+                        data: {{request_yr2020_data|safe}},
+                        borderColor: 'rgba(0, 188, 212, 0.75)',
+                        backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                        pointBorderColor: 'rgba(0, 188, 212, 0)',
+                        pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                        pointBorderWidth: 1
+                    },{
+                        label: "2021",
+                        data: {{request_yr2021_data|safe}},
+                        borderColor: 'rgba(233, 30, 99, 0.75)',
+                        backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                        pointBorderColor: 'rgba(233, 30, 99, 0)',
+                        pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                        pointBorderWidth: 1
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: 'top',
+                    },
+                  }
+              }
+          }
+          else if (type === 'recipient') {
+              config = {
+                  type: 'line',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                        label: "2020",
+                        data: {{recipient_yr2020_data|safe}},
+                        borderColor: 'rgba(0, 188, 212, 0.75)',
+                        backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                        pointBorderColor: 'rgba(0, 188, 212, 0)',
+                        pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                        pointBorderWidth: 1
+                    },{
+                        label: "2021",
+                        data: {{recipient_yr2021_data|safe}},
+                        borderColor: 'rgba(233, 30, 99, 0.75)',
+                        backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                        pointBorderColor: 'rgba(233, 30, 99, 0)',
+                        pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                        pointBorderWidth: 1
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: 'top',
+                    },
+                  }
+              }
+          }
+          else if (type === 'occupation_table') {
+              config = {
+                  type: 'horizontalBar',
+                  data: {
+                    labels: {{label_occupation|safe}},
+                    datasets: [{
+                        label: "AEW",
+                        data: {{aew|safe}},
+                        backgroundColor: 'rgba( 244, 67, 54, 0.8)'
+                    }, {
+                          label: "Chef",
+                          data: {{chef|safe}},
+                          backgroundColor: 'rgba( 233, 30, 99, 0.8)'
+                    }, {
+                          label: "Dev Worker",
+                          data: {{dw|safe}},
+                            backgroundColor: 'rgba( 156, 39, 176, 0.8)'
+                    }, {
+                          label: "Entrepreneur",
+                          data: {{entre|safe}},
+                          backgroundColor: 'rgba( 103, 58, 183, 0.8)'
+                    }, {
+                          label: "Farmer",
+                          data: {{farmer|safe}},
+                          backgroundColor: 'rgba( 63, 81, 181, 0.8)'
+                    }, {
+                          label: "Govt Employee",
+                          data: {{ge|safe}},
+                          backgroundColor: 'rgba( 33, 150, 243, 0.8)'
+                    }, {
+                          label: "Govt Officials",
+                          data: {{go|safe}},
+                          backgroundColor: 'rgba( 3, 169, 244, 0.8)'
+                    }, {
+                          label: "Media",
+                          data: {{media|safe}},
+                          backgroundColor: 'rgba( 0, 188, 212, 0.8)'
+                    }, {
+                          label: "OFW",
+                          data: {{ofw|safe}},
+                          backgroundColor: 'rgba( 0, 150, 136, 0.8)'
+                    }, {
+                          label: "PhilRice Staff",
+                          data: {{ps|safe}},
+                          backgroundColor: 'rgba( 76, 175, 80, 0.8)'
+                    }, {
+                          label: "Policymakers",
+                          data: {{policy|safe}},
+                          backgroundColor: 'rgba( 139, 195, 74, 0.8)'
+                    }, {
+                          label: "Private Company",
+                          data: {{pc|safe}},
+                          backgroundColor: 'rgba( 205, 220, 57, 0.8)'
+                    }, {
+                          label: "Program Manager",
+                          data: {{pm|safe}},
+                          backgroundColor: 'rgba( 255, 232, 33, 0.8)'
+                    }, {
+                          label: "Researcher",
+                          data: {{researcher|safe}},
+                          backgroundColor: 'rgba( 255, 193, 7, 0.8)'
+                    }, {
+                          label: "Student",
+                          data: {{student|safe}},
+                          backgroundColor: 'rgba( 255, 152, 0, 0.8)'
+                    }, {
+                          label: "Teacher",
+                          data: {{teacher|safe}},
+                          backgroundColor: 'rgba( 255, 87, 34, 0.8)'
+                    }, {
+                          label: "Others",
+                          data: {{others|safe}},
+                          backgroundColor: 'rgba( 121, 85, 72, 0.8)'
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: 'right',
+                    },
+                  }
+              }
+          }
+          else if (type === 'kp_table') {
+              config = {
+                  type: 'horizontalBar',
+                  data: {
+                    labels: {{label|safe}},
+                    datasets: [{
+                        label: "Accordion",
+                        data: {{accordion|safe}},
+                        backgroundColor: 'rgba( 244, 67, 54, 0.8)'
+                    }, {
+                          label: "AR and Milestone",
+                          data: {{arnm|safe}},
+                          backgroundColor: 'rgba( 233, 30, 99, 0.8)'
+                    }, {
+                          label: "Book",
+                          data: {{book|safe}},
+                            backgroundColor: 'rgba( 156, 39, 176, 0.8)'
+                    }, {
+                          label: "Brochure and Leaflets",
+                          data: {{bnl|safe}},
+                          backgroundColor: 'rgba( 103, 58, 183, 0.8)'
+                    }, {
+                          label: "Calendar",
+                          data: {{calendar|safe}},
+                          backgroundColor: 'rgba( 63, 81, 181, 0.8)'
+                    }, {
+                          label: "Comics",
+                          data: {{comics|safe}},
+                          backgroundColor: 'rgba( 33, 150, 243, 0.8)'
+                    }, {
+                          label: "Facebook Ads",
+                          data: {{fa|safe}},
+                          backgroundColor: 'rgba( 3, 169, 244, 0.8)'
+                    }, {
+                          label: "Flipchart",
+                          data: {{flipchart|safe}},
+                          backgroundColor: 'rgba( 0, 188, 212, 0.8)'
+                    }, {
+                          label: "Handouts",
+                          data: {{book|safe}},
+                          backgroundColor: 'rgba( 0, 150, 136, 0.8)'
+                    }, {
+                          label: "Infographics",
+                          data: {{infographic|safe}},
+                          backgroundColor: 'rgba( 76, 175, 80, 0.8)'
+                    }, {
+                          label: "Journal",
+                          data: {{journal|safe}},
+                          backgroundColor: 'rgba( 139, 195, 74, 0.8)'
+                    }, {
+                          label: "Magasin",
+                          data: {{magasin|safe}},
+                          backgroundColor: 'rgba( 205, 220, 57, 0.8)'
+                    }, {
+                          label: "Magazine",
+                          data: {{magazine|safe}},
+                          backgroundColor: 'rgba( 255, 232, 33, 0.8)'
+                    }, {
+                          label: "Handouts",
+                          data: {{book|safe}},
+                          backgroundColor: 'rgba( 255, 193, 7, 0.8)'
+                    }, {
+                          label: "Manual and Field Guides",
+                          data: {{mnfg|safe}},
+                          backgroundColor: 'rgba( 255, 152, 0, 0.8)'
+                    }, {
+                          label: "Poster",
+                          data: {{poster|safe}},
+                          backgroundColor: 'rgba( 255, 87, 34, 0.8)'
+                    }, {
+                          label: "Q&A",
+                          data: {{qna|safe}},
+                          backgroundColor: 'rgba( 121, 85, 72, 0.8)'
+                    }, {
+                          label: "R&D Highlights",
+                          data: {{rndh|safe}},
+                          backgroundColor: 'rgba( 158, 158, 158, 0.8)'
+                    }, {
+                          label: "RS4DM",
+                          data: {{rs4dm|safe}},
+                          backgroundColor: 'rgba( 96, 125, 139, 0.8)'
+                    }, {
+                          label: "Technoguide",
+                          data: {{technoguide|safe}},
+                          backgroundColor: 'rgba( 0, 0, 0, 0.8)'
+                    }, {
+                          label: "Technology Bulletin",
+                          data: {{tb|safe}},
+                          backgroundColor: 'rgba( 244, 67, 54, 0.8)'
+                    },]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: 'right',
+                    },
+                  }
+              }
+          }
+        return config;
+      }
+    </script>
+</section>
+
+{% endblock %}

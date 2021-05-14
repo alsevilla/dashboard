@@ -1,0 +1,162 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<form class="" action="">
+  {% load widget_tweaks %}
+  {% csrf_token %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+          <a href="{% url 'data_input_kp_recipient' %}"><button class="pull-right btn btn-circle-lg btn-primary waves-effect waves-circle waves-float" type="button">
+            <i class="material-icons">done</i>
+          </button></a>
+          <h2>Input Data</h2>
+          <small>Knowledge Products</small>
+          <br>
+          <br>
+          <a href="{% url 'data_input_kp' %}">
+            <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">Manage KPs</button>
+          </a>
+          <a href="{% url 'data_input_kp_stock' %}">
+            <button class="btn btn-lg bg-teal waves-effect waves-float" type="button" name="button">Add KPs Stocks</button>
+          </a>
+          <a href="{% url 'data_input_kp_recipient' %}">
+            <button class="btn btn-lg bg-deep-purple waves-effect waves-float" type="button" name="button">Manage Recipients</button>
+          </a>
+          </div>
+        <!-- Start of Content -->
+
+        <div class="row clearfix">
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="card">
+                    <div class="header">
+                        <div class="row clearfix">
+                            <div class="col-xs-12">
+                                <h2>Requesting Party</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body">
+                      <!-- start of body -->
+                        <div class="row clearfix">
+                          <div class="col-xs-12">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    <h2 class="card-inside-title"> &nbsp;</h2>
+                                    {{ requestee }}
+                                    <label class="form-label">Requestee</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-12">
+                              <div class="form-group form-float">
+                                  <div class="form-line">
+                                    <h2 class="card-inside-title"> &nbsp;</h2>
+                                    {% render_field kp_distribute_form.Kp class="form-control"%}
+                                    <label class="form-label">KP</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xs-12">
+                              <div class="form-group form-float">
+                                <div class="form-line">
+                                    {% render_field kp_distribute_form.Quantity class="form-control"%}
+                                    <label class="form-label">Quantity</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <button onclick="save_row()" class="btn btn-lg bg-blue waves-effect waves-float" type="button" name="button">Add to Table</button>
+                      <!-- end of body -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            &nbsp;
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                      <th>KP</th>
+                                      <th>Quantity</th>
+                                      <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                      <th>KP</th>
+                                      <th>Quantity</th>
+                                      <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="data_table">
+                                  {% for table_datas in table_data %}
+                                    <tr>
+                                      <td>{{ table_datas.Kp }}</td>
+                                      <td>{{ table_datas.Quantity }}</td>
+                                      <td><a href="{% url 'data_input_kp_distribute_delete' table_datas.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End of Content -->
+    </div>
+</section>
+</form>
+<script>
+// ajax for passing values to views
+var formData = new FormData();
+
+  function save_row()
+  {
+      var request_data = {{ primary }};
+      var kp_data = $("#id_Kp").val();
+      var quantity_data = $("#id_Quantity").val();
+      // var year = new Date().getFullYear();
+      // var month = new Date().getMonth() + 1;
+
+      // var table_data = document.getElementById("data_table");
+      // table_data.innerHTML = table_data.innerHTML + row;
+
+      formData.append('request',request_data)
+      formData.append('kp',kp_data)
+      formData.append('quantity',quantity_data)
+      // formData.append('year',year)
+      // formData.append('month',month)
+      formData.append('action', 'post')
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+
+      $.ajax({
+        type: 'POST',
+        url: '',
+        sequentialUploads: true,
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        success: function () {
+          location.reload();
+          // var table_data = document.getElementById("data_table");
+          // table_data.innerHTML = "";
+        },
+        error: function(xhr, errmsg, err) {
+          console.log(xhr.status + ":" + xhr.responseText)
+        }
+      })
+  }
+
+
+</script>
+{% endblock %}

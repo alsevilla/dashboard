@@ -1,0 +1,1467 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<form class="" action="" method="POST">
+  {% load widget_tweaks %}
+  {% csrf_token %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+          <button class="pull-right btn btn-circle-lg btn-primary waves-effect waves-circle waves-float" type="submit" name = "submit">
+            <i class="material-icons">done</i>
+          </button>
+          <h2>Input Data</h2>
+          <small>PhilRice Text Center</small>
+          <br>
+          <br>
+        </div>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>GENERAL INFO</h2>
+                  </div>
+                  <div class="body">
+                    <div class="row clearfix">
+                      <div class="col-xs-12">
+                        <div class="col-xs-3">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  <h2>&nbsp;</h2>
+                                  {% render_field ptc_form.month class="form-control"%}
+                                  <label class="form-label">Month</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="form-group form-float">
+                              <h2>&nbsp;</h2>
+                                <div class="form-line">
+                                  {% render_field ptc_form.year class="form-control" %}
+                                  <label class="form-label">Year</label>
+
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.sms class="form-control"%}
+                                  <label class="form-label">No. of SMS Received</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.smsWD class="form-control"%}
+                                  <label class="form-label">Ave. no. of  SMS Received (wkdays)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.smsWE class="form-control"%}
+                                  <label class="form-label">Ave. no. of  SMS Received (wkends)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.dwntimeH class="form-control"%}
+                                  <label class="form-label">Downtime (Hrs)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.dwntimeM class="form-control"%}
+                                  <label class="form-label">Downtime (Mins)</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.texterOH class="form-control"%}
+                                  <label class="form-label">No. of Active Texters (office hrs)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.texterNOH class="form-control"%}
+                                  <label class="form-label">No. of Active Texters (non-office hrs)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.texterWD class="form-control"%}
+                                  <label class="form-label">No. of Active Texters (Wkends)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.texterWE class="form-control"%}
+                                  <label class="form-label">Ave. Daily Active Texters (wkdays)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.keywords class="form-control"%}
+                                  <label class="form-label">No. of keywords received</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.male class="form-control"%}
+                                  <label class="form-label">Male</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.female class="form-control"%}
+                                  <label class="form-label">Female</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+              <div class="header">
+                  <h2>CLASSIFICATION OF SMS</h2>
+              </div>
+              <div class="body">
+                <div class="row clearfix">
+                  <div class="col-xs-4">
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.seedAvail class="form-control"%}
+                              <label class="form-label">Seed Availability</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.seedVar class="form-control"%}
+                              <label class="form-label">Seed Quality & Varietal Info</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.landPrep class="form-control"%}
+                              <label class="form-label">Land Preparation</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.cropEsta class="form-control"%}
+                              <label class="form-label">Crop Establishment</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.nutriMng class="form-control"%}
+                              <label class="form-label">Nutrient Management</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.waterMng class="form-control"%}
+                              <label class="form-label">Water Management</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.pestMng class="form-control"%}
+                              <label class="form-label">Pest Management</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.harvMng class="form-control"%}
+                              <label class="form-label">Harvest Management</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.genInfo class="form-control"%}
+                              <label class="form-label">General Info / Research</label>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.knowProd class="form-control"%}
+                              <label class="form-label">Knowledge Products</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.machine class="form-control"%}
+                              <label class="form-label">Machines</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.foodSci class="form-control"%}
+                              <label class="form-label">Food Science</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.training class="form-control"%}
+                              <label class="form-label">Training</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.palayamanan class="form-control"%}
+                              <label class="form-label">Palayamanan</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.philrice class="form-control"%}
+                              <label class="form-label">PhilRice</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.otherAgency class="form-control"%}
+                              <label class="form-label">Other Agency</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.greetings class="form-control"%}
+                              <label class="form-label">Greetings</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.thanks class="form-control"%}
+                              <label class="form-label">Thanks</label>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.registration class="form-control"%}
+                              <label class="form-label">Registration</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.others class="form-control"%}
+                              <label class="form-label">Unrelated/Others</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.rcef class="form-control"%}
+                              <label class="form-label">RCEF</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.rcefSeed class="form-control"%}
+                              <label class="form-label">RCEF Seeds</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.rcefComp class="form-control"%}
+                              <label class="form-label">RCEF Complaints</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.rcefExt class="form-control"%}
+                              <label class="form-label">RCEF Extension</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.rsbsa class="form-control"%}
+                              <label class="form-label">RSBSA</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                              {% render_field ptc_form.website class="form-control"%}
+                              <label class="form-label">Website Promotion</label>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>RESPONSE TIME</h2>
+                  </div>
+                  <div class="body">
+                    <div class="row clearfix">
+                      <div class="col-xs-12">
+                        <b>Office hours (8:00 a.m. - 12:00 p.m. and 1:00 p.m. - 5:00 p.m.)</b>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH1to5 class="form-control"%}
+                                  <label class="form-label">0-5 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH6to10 class="form-control"%}
+                                  <label class="form-label">6-10 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH11to15 class="form-control"%}
+                                  <label class="form-label">11-15 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH16to20 class="form-control"%}
+                                  <label class="form-label">16-20 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH21to25 class="form-control"%}
+                                  <label class="form-label">21-25 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH26to30 class="form-control"%}
+                                  <label class="form-label">26-30 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH31to1h class="form-control"%}
+                                  <label class="form-label">31 mins-1 hr</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH1hto2h class="form-control"%}
+                                  <label class="form-label">1:01-2 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH2hto4h class="form-control"%}
+                                  <label class="form-label">2:01-4 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH4hto8h class="form-control"%}
+                                  <label class="form-label">4:01-8 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH8hto12h class="form-control"%}
+                                  <label class="form-label">8:01-12 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH12hto24h class="form-control"%}
+                                  <label class="form-label">12:01-24 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH24to48h class="form-control"%}
+                                  <label class="form-label">24:01-48 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.OH48hplus class="form-control"%}
+                                  <label class="form-label">24:01-48 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.notRes class="form-control"%}
+                                  <label class="form-label">Not Responded</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-12">
+                        <b>Non-office hours (12:00 a.m. - 7:59 a.m., 12:01 p.m. - 12:59 p.m., and 5:01 p.m. - 11:59 p.m.)</b>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH1to5 class="form-control"%}
+                                  <label class="form-label">0-5 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH6to10 class="form-control"%}
+                                  <label class="form-label">6-10 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH11to15 class="form-control"%}
+                                  <label class="form-label">11-15 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH16to20 class="form-control"%}
+                                  <label class="form-label">16-20 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH21to25 class="form-control"%}
+                                  <label class="form-label">21-25 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH26to30 class="form-control"%}
+                                  <label class="form-label">26-30 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH31to1h class="form-control"%}
+                                  <label class="form-label">31 mins-1 hr</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH1hto2h class="form-control"%}
+                                  <label class="form-label">1:01-2 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH2hto4h class="form-control"%}
+                                  <label class="form-label">2:01-4 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH4hto8h class="form-control"%}
+                                  <label class="form-label">4:01-8 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH8hto12h class="form-control"%}
+                                  <label class="form-label">8:01-12 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH12hto24h class="form-control"%}
+                                  <label class="form-label">12:01-24 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH24to48h class="form-control"%}
+                                  <label class="form-label">24:01-48 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NOH48hplus class="form-control"%}
+                                  <label class="form-label">24:01-48 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.NnotRes class="form-control"%}
+                                  <label class="form-label">Not Responded</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                        <div class="col-xs-12">
+                          <b>Weekends (Saturdays and Sundays)</b>
+                        </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH1to5 class="form-control"%}
+                                  <label class="form-label">0-5 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH6to10 class="form-control"%}
+                                  <label class="form-label">6-10 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH11to15 class="form-control"%}
+                                  <label class="form-label">11-15 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH16to20 class="form-control"%}
+                                  <label class="form-label">16-20 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH21to25 class="form-control"%}
+                                  <label class="form-label">21-25 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH26to30 class="form-control"%}
+                                  <label class="form-label">26-30 mins</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH31to1h class="form-control"%}
+                                  <label class="form-label">31 mins-1 hr</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH1hto2h class="form-control"%}
+                                  <label class="form-label">1:01-2 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH2hto4h class="form-control"%}
+                                  <label class="form-label">2:01-4 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH4hto8h class="form-control"%}
+                                  <label class="form-label">4:01-8 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH8hto12h class="form-control"%}
+                                  <label class="form-label">8:01-12 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH12hto24h class="form-control"%}
+                                  <label class="form-label">12:01-24 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH24to48h class="form-control"%}
+                                  <label class="form-label">24:01-48 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WOH48hplus class="form-control"%}
+                                  <label class="form-label">24:01-48 hrs</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                  {% render_field ptc_form.WnotRes class="form-control"%}
+                                  <label class="form-label">Not Responded</label>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+              <div class="header">
+                  <h2>LOCATION OF CLIENTS</h2>
+              </div>
+              <div class="body">
+                <div class="row clearfix">
+                  <div class="col-xs-4">
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.abra class="form-control"%}
+                            <label class="form-label">Abra</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.agusanNorte class="form-control"%}
+                            <label class="form-label">Agusan del Norte</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.agusanSur class="form-control"%}
+                            <label class="form-label">Agusan del Sur</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.aklan class="form-control"%}
+                            <label class="form-label">Aklan</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.albay class="form-control"%}
+                            <label class="form-label">Albay</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.antique class="form-control"%}
+                            <label class="form-label">Antique</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.apayao class="form-control"%}
+                            <label class="form-label">Apayao</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.aurora class="form-control"%}
+                            <label class="form-label">Aurora</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.basilan class="form-control"%}
+                            <label class="form-label">Basilan</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.bataan class="form-control"%}
+                            <label class="form-label">Bataan</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.batanes class="form-control"%}
+                            <label class="form-label">Batanes</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.batangas class="form-control"%}
+                            <label class="form-label">Batangas</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.benguet class="form-control"%}
+                            <label class="form-label">Benguet</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.biliran class="form-control"%}
+                            <label class="form-label">Biliran</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.bohol class="form-control"%}
+                            <label class="form-label">Bohol</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.bukidnon class="form-control"%}
+                            <label class="form-label">Bukidnon</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.bulacan class="form-control"%}
+                            <label class="form-label">Bulacan</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.cagayan class="form-control"%}
+                            <label class="form-label">Cagayan</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.camarinesNorte class="form-control"%}
+                            <label class="form-label">Camarines Norte</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.camarinesSur class="form-control"%}
+                            <label class="form-label">Camarines Sur</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.camiguin class="form-control"%}
+                            <label class="form-label">Camiguin</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.capiz class="form-control"%}
+                            <label class="form-label">Capiz</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.catanduanes class="form-control"%}
+                            <label class="form-label">Catanduanes</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.cavite class="form-control"%}
+                            <label class="form-label">Cavite</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.cebu class="form-control"%}
+                            <label class="form-label">Cebu</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.compostela class="form-control"%}
+                            <label class="form-label">Compostela Valley</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.davaoNorte class="form-control"%}
+                            <label class="form-label">Davao del Norte</label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.davaoSur class="form-control"%}
+                            <label class="form-label">Davao del Sur</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.davaoOriental class="form-control"%}
+                            <label class="form-label">Davao del Oriental</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.samarEast class="form-control"%}
+                            <label class="form-label">Eastern Samar</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.guimaras class="form-control"%}
+                            <label class="form-label">Guimaras</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.ifugao class="form-control"%}
+                            <label class="form-label">Ifugao</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.ilocosNorte class="form-control"%}
+                            <label class="form-label">Ilocos Norte</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.ilocosSur class="form-control"%}
+                            <label class="form-label">Ilocos Sur</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.iloilo class="form-control"%}
+                            <label class="form-label">Iloilo</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.isabela class="form-control"%}
+                            <label class="form-label">Isabela</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.kalinga class="form-control"%}
+                            <label class="form-label">Kalinga</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.launion class="form-control"%}
+                            <label class="form-label">La Union</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.laguna class="form-control"%}
+                            <label class="form-label">Laguna</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.lanaoNorte class="form-control"%}
+                            <label class="form-label">Lanao del Norte</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.lanaoSur class="form-control"%}
+                            <label class="form-label">Lanao del Sur</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.leyte class="form-control"%}
+                            <label class="form-label">Leyte</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.maguindanao class="form-control"%}
+                            <label class="form-label">Maguindanao</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.marinduque class="form-control"%}
+                            <label class="form-label">Marinduque</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.masbate class="form-control"%}
+                            <label class="form-label">Masbate</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.manila class="form-control"%}
+                            <label class="form-label">Metropolitan Manila</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.misamisOccidental class="form-control"%}
+                            <label class="form-label">Misamis Occidental</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.misamisOriental class="form-control"%}
+                            <label class="form-label">Misamis Oriental</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.mountainProvince class="form-control"%}
+                            <label class="form-label">Mountain Province</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.negrosOccidental class="form-control"%}
+                            <label class="form-label">Negros Occidental</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.negrosOriental class="form-control"%}
+                            <label class="form-label">Negros Oriental</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.cotabatoNorth class="form-control"%}
+                            <label class="form-label">North Cotabato</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.samarNorth class="form-control"%}
+                            <label class="form-label">North Samar</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.nuevaEcija class="form-control"%}
+                            <label class="form-label">Nueva Ecija</label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-4">
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.nuevaVizcaya class="form-control"%}
+                            <label class="form-label">Nueva Vizcaya</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.mindoroOccidental class="form-control"%}
+                            <label class="form-label">Occidental mindoro</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.mindoroOriental class="form-control"%}
+                            <label class="form-label">Oriental Mindoro</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.palawan class="form-control"%}
+                            <label class="form-label">Palawan</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.pampanga class="form-control"%}
+                            <label class="form-label">Pampanga</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.pangasinan class="form-control"%}
+                            <label class="form-label">Pangasinan</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.quezon class="form-control"%}
+                            <label class="form-label">Quezon</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.quirino class="form-control"%}
+                            <label class="form-label">Quirino</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.rizal class="form-control"%}
+                            <label class="form-label">Rizal</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.romblon class="form-control"%}
+                            <label class="form-label">Romblon</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.samar class="form-control"%}
+                            <label class="form-label">Samar</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.sarangani class="form-control"%}
+                            <label class="form-label">Sarangani</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.siquijor class="form-control"%}
+                            <label class="form-label">Siquijor</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.sorsogon class="form-control"%}
+                            <label class="form-label">Sorsogon</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.cotabatoSouth class="form-control"%}
+                            <label class="form-label">South Cotabato</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.leyteSouth class="form-control"%}
+                            <label class="form-label">Southern Leyte</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.sultanKudarat class="form-control"%}
+                            <label class="form-label">Sultan Kudarat</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.sulu class="form-control"%}
+                            <label class="form-label">Sulu</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.surigaoNorte class="form-control"%}
+                            <label class="form-label">Surigao del Norte</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.surigaoSur class="form-control"%}
+                            <label class="form-label">Surigao del Sur</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.tarlac class="form-control"%}
+                            <label class="form-label">Tarlac</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.tawitawi class="form-control"%}
+                            <label class="form-label">Tawi-tawi</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.zambales class="form-control"%}
+                            <label class="form-label">Zambales</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.zamboangaNorte class="form-control"%}
+                            <label class="form-label">Zamboanga del Norte</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.zamboangaSibugay class="form-control"%}
+                            <label class="form-label">Zamboanga Sibugay</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.zamboangaSur class="form-control"%}
+                            <label class="form-label">Zamboanga del Sur</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.international class="form-control"%}
+                            <label class="form-label">International</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                            {% render_field ptc_form.undetermined class="form-control"%}
+                            <label class="form-label">Undetermined</label>
+                          </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-xs-12">
+                    <b>NOTE:</b><p>Dinagat Islands is now under Surigao del Norte. Shariff Kabunsuan is now under Maguindanao. PhilRice PFTC MRForm Rev 00 Effectivity Date: 01 April 2011</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <!-- End of Content -->
+    </div>
+</section>
+</form>
+
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script type="text/javascript">
+  var date = new Date().getFullYear();
+  $("#id_year").val(date);
+</script>
+{% endblock %}

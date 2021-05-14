@@ -1,0 +1,288 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>Radio</h2>
+        </div>
+        <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>NO. OF SEGMENTS</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="segment" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TREND NO. OF SEGMENTS</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="segment_trend" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>NO. OF MALE AND FEMALE RESOURCE SPEAKER</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="gender" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>PROGRAM SEGMENT DATA</h2>
+                  </div>
+                  <div class="body">
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                      <th>Date</th>
+                                      <th>Time</th>
+                                      <th>Segment Title</th>
+                                      <th>Speaker</th>
+                                      <th>Sex</th>
+                                      <th>Station</th>
+                                      <th>Frequency</th>
+                                      <th>Location</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                      <th>Date</th>
+                                      <th>Time</th>
+                                      <th>Segment Title</th>
+                                      <th>Speaker</th>
+                                      <th>Sex</th>
+                                      <th>Station</th>
+                                      <th>Frequency</th>
+                                      <th>Location</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                  {% for data in radio_data %}
+                                    <tr>
+                                      <td> {{ data.year }}/{{ data.month }}/{{ data.day }}</td>
+                                      <td> {{ data.time }}</td>
+                                      <td> {{ data.topic }}</td>
+                                      <td> {{ data.interviewee }}</td>
+                                      <td> {{ data.sex }}</td>
+                                      <td> {{ data.station }}</td>
+                                      <td> {{ data.frequency }}</td>
+                                      <td> {{ data.location }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>RESPONDENTS</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="respondents" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TREND RESPONDENTS</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="respondents_trend" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>SATISFACTION SURVEY (MALE AND FEMALE RATIO)</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="satisfaction" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.bundle.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.min.js' %}"></script>
+
+<script type="text/javascript">
+  $(function () {
+      new Chart(document.getElementById("segment").getContext("2d"), getChartJs('segment'));
+      new Chart(document.getElementById("segment_trend").getContext("2d"), getChartJs('segment_trend'));
+      new Chart(document.getElementById("gender").getContext("2d"), getChartJs('gender'));
+      new Chart(document.getElementById("respondents").getContext("2d"), getChartJs('respondents'));
+      new Chart(document.getElementById("respondents_trend").getContext("2d"), getChartJs('respondents_trend'));
+      new Chart(document.getElementById("satisfaction").getContext("2d"), getChartJs('satisfaction'));
+  });
+
+  function getChartJs(type) {
+      var config = null;
+
+      if (type === 'segment') {
+          config = {
+              type: 'bar',
+              data: {
+                labels: {{label|safe}},
+                datasets: [{
+                    label: "Counts",
+                    data: {{ndetails|safe}},
+                    backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      // update yearly
+      else if (type === 'segment_trend') {
+        config = {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+              datasets: [{
+                label: "2021",
+                data: {{segment_trend_2021|safe}},
+                borderColor: 'rgba(0, 188, 212, 0.75)',
+                backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                pointBorderColor: 'rgba(0, 188, 212, 0)',
+                pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                pointBorderWidth: 1
+              }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+              position: 'top',
+              },
+            }
+        }
+      }
+      // update yearly end
+      else if (type === 'gender') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Male",
+                      data: {{male|safe}},
+                      backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                  }, {
+                          label: "Female",
+                          data: {{female|safe}},
+                          backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                      }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'respondents') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label2|safe}},
+                  datasets: [{
+                      label: "Respondents",
+                      data: {{respondents|safe}},
+                      backgroundColor: 'rgba(244, 67, 51, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      // update yearly
+      else if (type === 'respondents_trend') {
+        config = {
+            type: 'line',
+            data: {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+              datasets: [{
+                label: "2021",
+                data: {{respondents_trend_2021|safe}},
+                borderColor: 'rgba(0, 188, 212, 0.75)',
+                backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                pointBorderColor: 'rgba(0, 188, 212, 0)',
+                pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                pointBorderWidth: 1
+              }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+              position: 'top',
+              },
+            }
+        }
+      }
+      // update yearly end
+      else if (type === 'satisfaction') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label2|safe}},
+                  datasets: [{
+                      label: "Satisfied",
+                      data: {{satisfied|safe}},
+                      backgroundColor: 'rgba(244, 67, 51, 0.8)'
+                  }, {
+                          label: "Not satisfied",
+                          data: {{nsatisfied|safe}},
+                          backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                      }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      return config;
+  }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,674 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>DASHBOARD</h2>
+        </div>
+
+        <!-- Widgets -->
+        <div class="row clearfix">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-pink hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">thumb_up</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">Awards</div>
+                        <div class="number count-to" data-from="0" data-to="{{ awards_count }}" data-speed="15" data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-cyan hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">book</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">Publication</div>
+                        <div class="number count-to" data-from="0" data-to="{{ publications_count }}" data-speed="1000" data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-light-green hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">restore</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">Projects</div>
+                        <div class="number count-to" data-from="0" data-to="{{ projects_count }}" data-speed="1000" data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-orange hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">people</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">Staffs</div>
+                        <div class="number count-to" data-from="0" data-to="{{ staff_count }}" data-speed="1000" data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Widgets -->
+
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="body">
+                    <h3>FACEBOOK PERCENT INCREASE {{cur_year}} VS. {{prev_year}}</h3>
+                    <br>
+                      <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="info-box-2 bg-blue hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">thumb_up</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">LIKES ({{like_cur_count}} vs. {{like_prev_count}} )</div>
+                                    <div id="like" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-light-blue hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">person_add</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">FOLLOWERS ({{follow_cur_count}} vs. {{follow_prev_count}})</div>
+                                    <div id="follow" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-cyan hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">list</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">POSTS ({{allpost_cur_count}} vs. {{allpost_prev_count}})</div>
+                                    <div id="post" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-teal hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">contact_mail</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">MESSAGES ({{messagesRecieve_cur_count}} vs. {{messagesRecieve_prev_count}})</div>
+                                    <div id="message" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-deep-purple hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">contact_phone</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">RESPONSE RATES ({{responseRate_cur_count}} vs. {{responseRate_prev_count}})</div>
+                                    <div id="response" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-purple hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">insert_chart</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">SURVEYS ({{nSurvey_cur_count}} vs. {{nSurvey_prev_count}})</div>
+                                    <div id="survey" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row clearfix">
+                        <ol class="breadcrumb breadcrumb-col-teal pull-right">
+                            <li><a href="{% url 'facebook_page_info' %}"><i class="material-icons">keyboard_arrow_right</i> More Informations here</a></li>
+                        </ol>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="body">
+                    <h3>PTC PERCENT INCREASE {{cur_year}} VS. {{prev_year}}</h3>
+                    <br>
+                      <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="info-box-2 bg-teal hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">person_add</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">REGISTERED USERS ({{registered_cur_count}} vs. {{registered_prev_count}})</div>
+                                    <div id="registered" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-green hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">textsms</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">SMS RECIEVED ({{sms_cur_count}} vs. {{sms_prev_count}})</div>
+                                    <div id="sms" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-light-green hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">phonelink_ring</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">AVERAGE DAILY SMS ({{smsWD_cur_count|floatformat:2}} vs. {{smsWD_prev_count|floatformat:2}})</div>
+                                    <div id="smsWD" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-lime hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">system_update_alt</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">TOTAL RESPONSE OFFICE HOURS ({{responseptc_cur_count}} vs. {{responseptc_prev_count}})</div>
+                                    <div id="response_ptc" class="number"></div>
+                                </div>
+                            </div>
+                        </div> -->
+                      </div>
+                      <div class="row clearfix">
+                        <ol class="breadcrumb breadcrumb-col-teal pull-right">
+                            <li><a href="{% url 'ptc_table' %}"><i class="material-icons">keyboard_arrow_right</i> More Informations here</a></li>
+                        </ol>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="body">
+                    <h3>PHILRICE WEBSITE PERCENT INCREASE {{cur_year}} VS. {{prev_year}}</h3>
+                    <br>
+                      <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="info-box-2 bg-blue-grey hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">aspect_ratio</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">VISIT ({{pw_visit_cur_count}} vs. {{pw_visit_prev_count}})</div>
+                                    <div id="pw_visit" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-cyan hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">visibility</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">PAGE VIEWS ({{pw_pageviews_cur_count}} vs. {{pw_pageviews_prev_count}})</div>
+                                    <div id="pw_page" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-deep-orange hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">visibility</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">STORIES ({{pw_stories_cur_count}} vs. {{pw_stories_prev_count}})</div>
+                                    <div id="pw_stories" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row clearfix">
+                        <ol class="breadcrumb breadcrumb-col-teal pull-right">
+                            <li><a href="{% url 'pw_visitor_table' %}"><i class="material-icons">keyboard_arrow_right</i> More Informations here</a></li>
+                        </ol>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="body">
+                    <h3>PINOYRICE PERCENT INCREASE {{cur_year}} VS. {{prev_year}}</h3>
+                    <br>
+                      <div class="row clearfix">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="info-box-2 bg-purple hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">aspect_ratio</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">VISIT ({{visit_cur_count}} vs. {{visit_prev_count}})</div>
+                                    <div id="visit" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-teal hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">cloud_download</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">DOWNLOAD ({{download_cur_count}} vs. {{download_prev_count}})</div>
+                                    <div id="download" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-indigo hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">visibility</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">PAGE VIEWS ({{pageviews_cur_count}} vs. {{pageviews_prev_count}})</div>
+                                    <div id="page" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-brown hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">visibility</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">UPLOADS ({{upload_cur_count}} vs. {{upload_prev_count}})</div>
+                                    <div id="uploads" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row clearfix">
+                        <ol class="breadcrumb breadcrumb-col-teal pull-right">
+                            <li><a href="{% url 'pr_table' %}"><i class="material-icons">keyboard_arrow_right</i> More Informations here</a></li>
+                        </ol>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="body">
+                    <h3>RADIO PERCENT INCREASE {{cur_year}} VS. {{prev_year}}</h3>
+                    <br>
+                      <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="info-box-2 bg-blue-grey hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">aspect_ratio</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">RESORCE SPEAKER ({{rs_cur_data}} vs. {{rs_prev_count}})</div>
+                                    <div id="rs" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="info-box-2 bg-grey hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">aspect_ratio</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">RESPONDENTS ({{respondents_cur_count}} vs. {{respondents_prev_count}})</div>
+                                    <div id="respondents" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="info-box-2 bg-orange hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">aspect_ratio</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">TOTAL SEGMENTS ({{segment_cur_count}} vs. {{segment_prev_count}})</div>
+                                    <div id="segments" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row clearfix">
+                        <ol class="breadcrumb breadcrumb-col-teal pull-right">
+                            <li><a href="{% url 'pr_table' %}"><i class="material-icons">keyboard_arrow_right</i> More Informations here</a></li>
+                        </ol>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="body">
+                    <h3>KP PERCENT INCREASE {{cur_year}} VS. {{prev_year}}</h3>
+                    <br>
+                      <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="info-box-2 bg-red hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">surround_sound</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">TOTAL DISTRIBUTED ({{distribute_cur_count}} vs. {{distribute_prev_count}})</div>
+                                    <div id="distribute" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-pink hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">print</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">TOTAL PRODUCED ({{kp_cur_count}} vs. {{kp_prev_count}})</div>
+                                    <div id="kp" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                          <div class="info-box-2 bg-purple hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">play_for_work</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">TOTAL REQUEST ({{kp_cur_count}} vs. {{kp_prev_count}})</div>
+                                    <div id="request" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row clearfix">
+                        <ol class="breadcrumb breadcrumb-col-teal pull-right">
+                            <li><a href="{% url 'kp_tables' %}"><i class="material-icons">keyboard_arrow_right</i> More Informations here</a></li>
+                        </ol>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="body">
+                    <h3>PARTNER PERCENT INCREASE {{cur_year}} VS. {{prev_year}}</h3>
+                    <br>
+                      <div class="row clearfix">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="info-box-2 bg-purple hover-expand-effect">
+                                <div class="icon">
+                                    <i class="material-icons">aspect_ratio</i>
+                                </div>
+                                <div class="content">
+                                    <div class="text">ENGAGEMENT ({{engagement_cur_count}} vs. {{engagement_prev_count}})</div>
+                                    <div id="engagement" class="number"></div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row clearfix">
+                        <ol class="breadcrumb breadcrumb-col-teal pull-right">
+                            <li><a href="{% url 'pr_table' %}"><i class="material-icons">keyboard_arrow_right</i> More Informations here</a></li>
+                        </ol>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="card">
+                  <div class="header">
+                      <h2>
+                          ONGOING PROGRAMS AND PROJECT
+                      </h2>
+                  </div>
+                  <div class="body">
+                      <div class="">
+                          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                              <thead>
+                                  <tr>
+                                    <th>Program</th>
+                                    <th>Project</th>
+                                    <th>Duration</th>
+                                    <th>Quarter</th>
+                                    <th>Year</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                    <th>Program</th>
+                                    <th>Project</th>
+                                    <th>Duration</th>
+                                    <th>Quarter</th>
+                                    <th>Year</th>
+                                  </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for ongoing_projects in ongoing_project %}
+                                  <tr>
+                                      <td>{{ ongoing_projects.program }}</td>
+                                      <td>{{ ongoing_projects.project }}</td>
+                                      <td>{{ ongoing_projects.duration }}</td>
+                                      <td>{{ ongoing_projects.quarter }}</td>
+                                      <td>{{ ongoing_projects.year }}</td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="card">
+                  <div class="header">
+                      <h2>
+                          STAFFS REPORTING TO OFFICE
+                      </h2>
+                  </div>
+                  <div class="body">
+                      <div class="">
+                          <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                              <thead>
+                                  <tr>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>MI</th>
+                                    <th>Position</th>
+                                    <th>Birthday</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                <tr>
+                                  <th>Last Name</th>
+                                  <th>First Name</th>
+                                  <th>MI</th>
+                                  <th>Position</th>
+                                  <th>Birthday</th>
+                                </tr>
+                              </tfoot>
+                              <tbody>
+                                {% for staff_actives in staff_active %}
+                                  <tr>
+                                      <td>{{ staff_actives.lname }}</td>
+                                      <td>{{ staff_actives.fname }}</td>
+                                      <td>{{ staff_actives.mi }}</td>
+                                      <td>{{ staff_actives.position }}</td>
+                                      <td>{{ staff_actives.bday }}</td>
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+<script type="text/javascript">
+  var like_cur_count = {{like_cur_count}};
+  var like_prev_count = {{like_prev_count}};
+  var inc_like = like_cur_count - like_prev_count;
+  var percent_inc_like = (inc_like / like_prev_count) * 100;
+  $('#like').text(percent_inc_like.toFixed(2) + "%");
+
+
+  var follow_cur_count = {{follow_cur_count}};
+  var follow_prev_count = {{follow_prev_count}};
+  var inc_follow = follow_cur_count - follow_prev_count;
+  var percent_inc_follow = (inc_follow / follow_prev_count) * 100;
+  $('#follow').text(percent_inc_follow.toFixed(2) + "%");
+
+  var allpost_cur_count = {{allpost_cur_count}};
+  var allpost_prev_count = {{allpost_prev_count}};
+  var inc_allpost = allpost_cur_count - allpost_prev_count;
+  var percent_inc_allpost = (inc_allpost / allpost_prev_count) * 100;
+  $('#post').text(percent_inc_allpost.toFixed(2) + "%");
+
+  var messagesRecieve_cur_count = {{messagesRecieve_cur_count}};
+  var messagesRecieve_prev_count = {{messagesRecieve_prev_count}};
+  var inc_messagesRecieve = messagesRecieve_cur_count - messagesRecieve_prev_count;
+  var percent_inc_messagesRecieve = (inc_messagesRecieve / messagesRecieve_prev_count) * 100;
+  $('#message').text(percent_inc_messagesRecieve.toFixed(2) + "%");
+
+  var responseRate_cur_count = {{responseRate_cur_count}};
+  var responseRate_prev_count = {{responseRate_prev_count}};
+  var inc_responseRate = responseRate_cur_count - responseRate_prev_count;
+  var percent_inc_responseRate = (inc_responseRate / responseRate_prev_count) * 100;
+  $('#response').text(percent_inc_responseRate.toFixed(2) + "%");
+
+  var nSurvey_cur_count = {{nSurvey_cur_count}};
+  var nSurvey_prev_count = {{nSurvey_prev_count}};
+  var inc_nSurvey = nSurvey_cur_count - nSurvey_prev_count;
+  var percent_inc_nSurvey = (inc_nSurvey / nSurvey_prev_count) * 100;
+  $('#survey').text(percent_inc_nSurvey.toFixed(2) + "%");
+
+  var pw_visit_cur_count = {{pw_visit_cur_count}};
+  var pw_visit_prev_count = {{pw_visit_prev_count}};
+  var inc_pw_visit = pw_visit_cur_count - pw_visit_prev_count;
+  var percent_inc_pw_visit = (inc_pw_visit / pw_visit_prev_count) * 100;
+  $('#pw_visit').text(percent_inc_pw_visit.toFixed(2) + "%");
+
+  var pw_pageviews_cur_count = {{pw_pageviews_cur_count}};
+  var pw_pageviews_prev_count = {{pw_pageviews_prev_count}};
+  var inc_pw_pageviews = pw_pageviews_cur_count - pw_pageviews_prev_count;
+  var percent_inc_pw_pageviews = (inc_pw_pageviews / pw_pageviews_prev_count) * 100;
+  $('#pw_page').text(percent_inc_pw_pageviews.toFixed(2) + "%");
+
+  var pw_stories_cur_count = {{pw_stories_cur_count}};
+  var pw_stories_prev_count = {{pw_stories_prev_count}};
+  var inc_pw_stories = pw_stories_cur_count - pw_stories_prev_count;
+  var percent_inc_stories = (inc_pw_stories / pw_stories_prev_count) * 100;
+  $('#pw_stories').text(percent_inc_stories.toFixed(2) + "%");
+
+  var registered_cur_count = {{registered_cur_count}};
+  var registered_prev_count = {{registered_prev_count}};
+  var inc_registered = registered_cur_count - registered_prev_count;
+  var percent_inc_registered = (inc_registered / registered_prev_count) * 100;
+  $('#registered').text(percent_inc_registered.toFixed(2) + "%");
+
+  var sms_cur_count = {{sms_cur_count}};
+  var sms_prev_count = {{sms_prev_count}};
+  var inc_sms = sms_cur_count - sms_prev_count;
+  var percent_inc_sms = (inc_sms / sms_prev_count) * 100;
+  $('#sms').text(percent_inc_sms.toFixed(2) + "%");
+
+  var smsWD_cur_count = {{smsWD_cur_count}};
+  var smsWD_prev_count = {{smsWD_prev_count}};
+  var inc_smsWD = smsWD_cur_count - smsWD_prev_count;
+  var percent_inc_smsWD = (inc_smsWD / smsWD_prev_count) * 100;
+  $('#smsWD').text(percent_inc_smsWD.toFixed(2) + "%");
+
+  var responseptc_cur_count = {{responseptc_cur_count}};
+  var responseptc_prev_count = {{responseptc_prev_count}};
+  var inc_responseptc = responseptc_cur_count - responseptc_prev_count;
+  var percent_inc_responseptc = (inc_responseptc / responseptc_prev_count) * 100;
+  $('#response_ptc').text(percent_inc_responseptc.toFixed(2) + "%");
+
+  var distribute_cur_count = {{distribute_cur_count}};
+  var distribute_prev_count = {{distribute_prev_count}};
+  var inc_distribute = distribute_cur_count - distribute_prev_count;
+  var percent_inc_distribute = (inc_distribute / distribute_prev_count) * 100;
+  $('#distribute').text(percent_inc_distribute.toFixed(2) + "%");
+
+  var kp_cur_count = {{kp_cur_count}};
+  var kp_prev_count = {{kp_prev_count}};
+  var inc_kp = kp_cur_count - kp_prev_count;
+  var percent_inc_kp = (inc_kp / kp_prev_count) * 100;
+  $('#kp').text(percent_inc_kp.toFixed(2) + "%");
+
+  var request_cur_count = {{request_cur_count}};
+  var request_prev_count = {{request_prev_count}};
+  var inc_request = request_cur_count - request_prev_count;
+  var percent_inc_request = (inc_request / request_prev_count) * 100;
+  $('#request').text(percent_inc_request.toFixed(2) + "%");
+
+  var visit_cur_count = {{visit_cur_count}};
+  var visit_prev_count = {{visit_prev_count}};
+  var inc_visit = visit_cur_count - visit_prev_count;
+  var percent_inc_visit = (inc_visit / visit_prev_count) * 100;
+  $('#visit').text(percent_inc_visit.toFixed(2) + "%");
+
+  var download_cur_count = {{download_cur_count}};
+  var download_prev_count = {{download_prev_count}};
+  var inc_download = download_cur_count - download_prev_count;
+  var percent_inc_download = (inc_download / download_prev_count) * 100;
+  $('#download').text(percent_inc_download.toFixed(2) + "%");
+
+  var pageviews_cur_count = {{pageviews_cur_count}};
+  var pageviews_prev_count = {{pageviews_prev_count}};
+  var inc_pageviews = pageviews_cur_count - pageviews_prev_count;
+  var percent_inc_pageviews = (inc_pageviews / pageviews_prev_count) * 100;
+  $('#page').text(percent_inc_pageviews.toFixed(2) + "%");
+
+  var upload_cur_count = {{upload_cur_count}};
+  var upload_prev_count = {{upload_prev_count}};
+  var inc_upload = upload_cur_count - upload_prev_count;
+  var percent_inc_upload = (inc_upload / upload_prev_count) * 100;
+  $('#uploads').text(percent_inc_upload.toFixed(2) + "%");
+
+  var segment_cur_count = {{segment_cur_count}};
+  var segment_prev_count = {{segment_prev_count}};
+  var inc_segment = segment_cur_count - segment_prev_count;
+  var percent_inc_segment = (inc_segment / segment_prev_count) * 100;
+  $('#segments').text(percent_inc_segment.toFixed(2) + "%");
+
+  var rs_cur_count = {{rs_cur_count}};
+  var rs_prev_count = {{rs_prev_count}};
+  var inc_rs = rs_cur_count - rs_prev_count;
+  var percent_inc_rs = (inc_rs / rs_prev_count) * 100;
+  $('#rs').text(percent_inc_rs.toFixed(2) + "%");
+
+  var respondents_cur_count = {{respondents_cur_count}};
+  var respondents_prev_count = {{respondents_prev_count}};
+  var inc_respondents = respondents_cur_count - respondents_prev_count;
+  var percent_inc_respondents = (inc_respondents / respondents_prev_count) * 100;
+  $('#respondents').text(percent_inc_respondents.toFixed(2) + "%");
+
+  var engagement_cur_count = {{engagement_cur_count}};
+  var engagement_prev_count = {{engagement_prev_count}};
+  var inc_engagement = engagement_cur_count - engagement_prev_count;
+  var percent_inc_engagement = (inc_engagement / engagement_prev_count) * 100;
+  $('#engagement').text(percent_inc_engagement.toFixed(2) + "%");
+</script>
+
+<script src="{% static 'js/pages/widgets/infobox/infobox-3.js' %}"></script>
+
+
+{% endblock %}

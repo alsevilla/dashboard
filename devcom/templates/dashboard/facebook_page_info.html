@@ -1,0 +1,1065 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>Facebook</h2>
+            <small>Page Info</small>
+        </div>
+        <br>
+        <a href="{% url 'facebook_page_info' %}">
+          <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">PAGE INFO</button>
+        </a>
+        <a href="{% url 'facebook_post_data' %}">
+          <button class="btn btn-lg bg-deep-orange waves-effect waves-float" type="button" name="button">SURVEY</button>
+        </a>
+        <br>
+        <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>Like and Follow</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="likefollowM" height="100"></canvas>
+                      <canvas id="likefollowS" height="100"></canvas>
+                      <canvas id="likefollowY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>NO OF POSTS</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="post_month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="post_semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="post_year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="postsM" height="100"></canvas>
+                      <canvas id="postsS" height="100"></canvas>
+                      <canvas id="postsY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>ENGAGEMENTS</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="engagement_month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="engagement_semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="engagement_year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="engagementM" height="100"></canvas>
+                      <canvas id="engagementS" height="100"></canvas>
+                      <canvas id="engagementY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>POST AND VIDEO</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="postvideo_month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="postvideo_semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="postvideo_year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="postvideoM" height="100"></canvas>
+                      <canvas id="postvideoS" height="100"></canvas>
+                      <canvas id="postvideoY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>VIDEO REACTIONS</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="video_month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="video_semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="video_year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="videoM" height="100"></canvas>
+                      <canvas id="videoS" height="100"></canvas>
+                      <canvas id="videoY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>VIDEO CATEGORIES</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="categories_month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="categories_semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="categories_year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="categoriesM" height="100"></canvas>
+                      <canvas id="categoriesS" height="100"></canvas>
+                      <canvas id="categoriesY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>OTHER AGENCIES</h2>
+                      <ul class="header-dropdown m-r--5">
+                          <li class="dropdown">
+                              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                  <i class="material-icons">more_vert</i>
+                              </a>
+                              <ul class="dropdown-menu pull-right">
+                                  <li id="agencies_month"><a href="javascript:void(0);">Month</a></li>
+                                  <li id="agencies_semester"><a href="javascript:void(0);">Semester</a></li>
+                                  <li id="agencies_year"><a href="javascript:void(0);">Year</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="body">
+                      <canvas id="agenciesM" height="100"></canvas>
+                      <canvas id="agenciesS" height="100"></canvas>
+                      <canvas id="agenciesY" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.bundle.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.min.js' %}"></script>
+
+<script type="text/javascript">
+// this is a brute force method
+// please change this part to ajax
+  $(function () {
+      new Chart(document.getElementById("likefollowM").getContext("2d"), getChartJs('likefollowM'));
+      new Chart(document.getElementById("likefollowS").getContext("2d"), getChartJs('likefollowS'));
+      new Chart(document.getElementById("likefollowY").getContext("2d"), getChartJs('likefollowY'));
+      new Chart(document.getElementById("postsM").getContext("2d"), getChartJs('postsM'));
+      new Chart(document.getElementById("postsS").getContext("2d"), getChartJs('postsS'));
+      new Chart(document.getElementById("postsY").getContext("2d"), getChartJs('postsY'));
+      new Chart(document.getElementById("engagementM").getContext("2d"), getChartJs('engagementM'));
+      new Chart(document.getElementById("engagementS").getContext("2d"), getChartJs('engagementS'));
+      new Chart(document.getElementById("engagementY").getContext("2d"), getChartJs('engagementY'));
+      new Chart(document.getElementById("postvideoM").getContext("2d"), getChartJs('postvideoM'));
+      new Chart(document.getElementById("postvideoS").getContext("2d"), getChartJs('postvideoS'));
+      new Chart(document.getElementById("postvideoY").getContext("2d"), getChartJs('postvideoY'));
+      new Chart(document.getElementById("videoM").getContext("2d"), getChartJs('videoM'));
+      new Chart(document.getElementById("videoS").getContext("2d"), getChartJs('videoS'));
+      new Chart(document.getElementById("videoY").getContext("2d"), getChartJs('videoY'));
+      new Chart(document.getElementById("categoriesM").getContext("2d"), getChartJs('categoriesM'));
+      new Chart(document.getElementById("categoriesS").getContext("2d"), getChartJs('categoriesS'));
+      new Chart(document.getElementById("categoriesY").getContext("2d"), getChartJs('categoriesY'));
+      new Chart(document.getElementById("agenciesM").getContext("2d"), getChartJs('agenciesM'));
+      new Chart(document.getElementById("agenciesS").getContext("2d"), getChartJs('agenciesS'));
+      new Chart(document.getElementById("agenciesY").getContext("2d"), getChartJs('agenciesY'));
+  });
+
+  function getChartJs(type) {
+      var config = null;
+
+      if (type === 'likefollowM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Likes",
+                      data: {{like|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Follows",
+                      data: {{follow|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'likefollowS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "Likes",
+                      data: {{likeS|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Follows",
+                      data: {{followS|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'likefollowY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "Likes",
+                      data: {{likeY|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Follows",
+                      data: {{followY|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'postsM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Seeds",
+                      data: {{seeds|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Extensions",
+                      data: {{extensions|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Core",
+                      data: {{core|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Hybrid",
+                      data: {{hybrid|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }, {
+                      label: "Seeds(PRRI)",
+                      data: {{pSeeds|safe}},
+                      backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                  }, {
+                      label: "Extensions(PRRI)",
+                      data: {{pExtensions|safe}},
+                      backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                  }, {
+                      label: "Core(PRRI)",
+                      data: {{pCore|safe}},
+                      backgroundColor: 'rgba(3, 169, 244, 0.8)'
+                  }, {
+                      label: "Hybrid(PRRI)",
+                      data: {{pHybrid|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  },]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'postsS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "Seeds",
+                      data: {{seedsS|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Extensions",
+                      data: {{extensionsS|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Core",
+                      data: {{coreS|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Hybrid",
+                      data: {{hybridS|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }, {
+                      label: "Seeds(PRRI)",
+                      data: {{pSeedsS|safe}},
+                      backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                  }, {
+                      label: "Extensions(PRRI)",
+                      data: {{pExtensionsS|safe}},
+                      backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                  }, {
+                      label: "Core(PRRI)",
+                      data: {{pCoreS|safe}},
+                      backgroundColor: 'rgba(3, 169, 244, 0.8)'
+                  }, {
+                      label: "Hybrid(PRRI)",
+                      data: {{pHybridS|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  },]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'postsY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "Seeds",
+                      data: {{seedsY|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Extensions",
+                      data: {{extensionsY|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Core",
+                      data: {{coreY|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Hybrid",
+                      data: {{hybridY|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }, {
+                      label: "Seeds(PRRI)",
+                      data: {{pSeedsY|safe}},
+                      backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                  }, {
+                      label: "Extensions(PRRI)",
+                      data: {{pExtensionsY|safe}},
+                      backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                  }, {
+                      label: "Core(PRRI)",
+                      data: {{pCoreY|safe}},
+                      backgroundColor: 'rgba(3, 169, 244, 0.8)'
+                  }, {
+                      label: "Hybrid(PRRI)",
+                      data: {{pHybridY|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  },]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'engagementM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Reactions",
+                      data: {{reactions|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Comments",
+                      data: {{comments|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Shares",
+                      data: {{shares|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Reach",
+                      data: {{reach|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'engagementS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "Reactions",
+                      data: {{reactionsS|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Comments",
+                      data: {{commentsS|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Shares",
+                      data: {{sharesS|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Reach",
+                      data: {{reachS|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'engagementY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "Reactions",
+                      data: {{reactionsY|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Comments",
+                      data: {{commentsY|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Shares",
+                      data: {{sharesY|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Reach",
+                      data: {{reachY|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'postvideoM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Post",
+                      data: {{allpost|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Video",
+                      data: {{videos|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'postvideoS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "Post",
+                      data: {{allpostS|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Video",
+                      data: {{videosS|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'postvideoY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "Post",
+                      data: {{allpostY|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Video",
+                      data: {{videosY|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'videoM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Views",
+                      data: {{vViews|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Reactions",
+                      data: {{vReactions|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Comments",
+                      data: {{vComments|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Shares",
+                      data: {{vShares|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  },{
+                      label: "Reach",
+                      data: {{vReach|safe}},
+                      backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'videoS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "Views",
+                      data: {{vViewsS|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Reactions",
+                      data: {{vReactionsS|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Comments",
+                      data: {{vCommentsS|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Shares",
+                      data: {{vSharesS|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  },{
+                      label: "Reach",
+                      data: {{vReachS|safe}},
+                      backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'videoY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "Views",
+                      data: {{vViewsY|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Reactions",
+                      data: {{vReactionsY|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Comments",
+                      data: {{vCommentsY|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Shares",
+                      data: {{vSharesY|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  },{
+                      label: "Reach",
+                      data: {{vReachY|safe}},
+                      backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'categoriesM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Seeds",
+                      data: {{vSeeds|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Extensions",
+                      data: {{vExtensions|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Core",
+                      data: {{vCore|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Hybrid",
+                      data: {{vHybrid|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'categoriesS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "Seeds",
+                      data: {{vSeedsS|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Extensions",
+                      data: {{vExtensionsS|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Core",
+                      data: {{vCoreS|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Hybrid",
+                      data: {{vHybridS|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'categoriesY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "Seeds",
+                      data: {{vSeedsY|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "Extensions",
+                      data: {{vExtensionsY|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Core",
+                      data: {{vCoreY|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "Hybrid",
+                      data: {{vHybridY|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'agenciesM') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "IRRI",
+                      data: {{irri|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "DA",
+                      data: {{da|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "ATI",
+                      data: {{ati|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "PCC",
+                      data: {{pcc|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }, {
+                      label: "PhilMech",
+                      data: {{philmech|safe}},
+                      backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                  }, {
+                      label: "BPI",
+                      data: {{bpi|safe}},
+                      backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                  }, {
+                      label: "BAR",
+                      data: {{bar|safe}},
+                      backgroundColor: 'rgba(3, 169, 244, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'agenciesS') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelS|safe}},
+                  datasets: [{
+                      label: "IRRI",
+                      data: {{irriS|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "DA",
+                      data: {{daS|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "ATI",
+                      data: {{atiS|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "PCC",
+                      data: {{pccS|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }, {
+                      label: "PhilMech",
+                      data: {{philmechS|safe}},
+                      backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                  }, {
+                      label: "BPI",
+                      data: {{bpiS|safe}},
+                      backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                  }, {
+                      label: "BAR",
+                      data: {{barS|safe}},
+                      backgroundColor: 'rgba(3, 169, 244, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'agenciesY') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{labelY|safe}},
+                  datasets: [{
+                      label: "IRRI",
+                      data: {{irriY|safe}},
+                      backgroundColor: 'rgba(244, 67, 54, 0.8)'
+                  }, {
+                      label: "DA",
+                      data: {{daY|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "ATI",
+                      data: {{atiY|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }, {
+                      label: "PCC",
+                      data: {{pccY|safe}},
+                      backgroundColor: 'rgba(103, 58, 183, 0.8)'
+                  }, {
+                      label: "PhilMech",
+                      data: {{philmechY|safe}},
+                      backgroundColor: 'rgba(63, 81, 181, 0.8)'
+                  }, {
+                      label: "BPI",
+                      data: {{bpiY|safe}},
+                      backgroundColor: 'rgba(33, 150, 243, 0.8)'
+                  }, {
+                      label: "BAR",
+                      data: {{barY|safe}},
+                      backgroundColor: 'rgba(3, 169, 244, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      return config;
+  }
+
+</script>
+<script type="text/javascript">
+  $("#likefollowY").hide();
+  $("#likefollowS").hide();
+
+  $("#postsS").hide();
+  $("#postsY").hide();
+
+  $("#engagementS").hide();
+  $("#engagementY").hide();
+
+  $("#postvideoS").hide();
+  $("#postvideoY").hide();
+
+  $("#videoS").hide();
+  $("#videoY").hide();
+
+  $("#categoriesS").hide();
+  $("#categoriesY").hide();
+
+  $("#agenciesS").hide();
+  $("#agenciesY").hide();
+
+
+  $(document).ready(function(){
+    $("#month").click(function(){
+      $("#likefollowM").show();
+      $("#likefollowS").hide();
+      $("#likefollowY").hide();
+    })
+    $("#year").click(function(){
+      $("#likefollowY").show();
+      $("#likefollowS").hide();
+      $("#likefollowM").hide();
+    })
+    $("#semester").click(function(){
+      $("#likefollowS").show();
+      $("#likefollowY").hide();
+      $("#likefollowM").hide();
+    })
+
+    $("#post_month").click(function(){
+      $("#postsM").show();
+      $("#postsS").hide();
+      $("#postsY").hide();
+    })
+    $("#post_year").click(function(){
+      $("#postsY").show();
+      $("#postsS").hide();
+      $("#postsM").hide();
+    })
+    $("#post_semester").click(function(){
+      $("#postsS").show();
+      $("#postsY").hide();
+      $("#postsM").hide();
+    })
+    $("#engagement_month").click(function(){
+      $("#engagementM").show();
+      $("#engagementS").hide();
+      $("#engagementY").hide();
+    })
+    $("#engagement_year").click(function(){
+      $("#engagementY").show();
+      $("#engagementS").hide();
+      $("#engagementM").hide();
+    })
+    $("#engagement_semester").click(function(){
+      $("#engagementS").show();
+      $("#engagementY").hide();
+      $("#engagementM").hide();
+    })
+    $("#postvideo_month").click(function(){
+      $("#postvideoM").show();
+      $("#postvideoS").hide();
+      $("#postvideoY").hide();
+    })
+    $("#postvideo_year").click(function(){
+      $("#postvideoY").show();
+      $("#postvideoS").hide();
+      $("#postvideoM").hide();
+    })
+    $("#postvideo_semester").click(function(){
+      $("#postvideoS").show();
+      $("#postvideoY").hide();
+      $("#postvideoM").hide();
+    })
+    $("#video_month").click(function(){
+      $("#videoM").show();
+      $("#videoS").hide();
+      $("#videoY").hide();
+    })
+    $("#video_year").click(function(){
+      $("#videoY").show();
+      $("#videoS").hide();
+      $("#videoM").hide();
+    })
+    $("#video_semester").click(function(){
+      $("#videoS").show();
+      $("#videoY").hide();
+      $("#videoM").hide();
+    })
+    $("#categories_month").click(function(){
+      $("#categoriesM").show();
+      $("#categoriesS").hide();
+      $("#categoriesY").hide();
+    })
+    $("#categories_year").click(function(){
+      $("#categoriesY").show();
+      $("#categoriesS").hide();
+      $("#categoriesM").hide();
+    })
+    $("#categories_semester").click(function(){
+      $("#categoriesS").show();
+      $("#categoriesY").hide();
+      $("#categoriesM").hide();
+    })
+    $("#agencies_month").click(function(){
+      $("#agenciesM").show();
+      $("#agenciesS").hide();
+      $("#agenciesY").hide();
+    })
+    $("#agencies_year").click(function(){
+      $("#agenciesY").show();
+      $("#agenciesS").hide();
+      $("#agenciesM").hide();
+    })
+    $("#agencies_semester").click(function(){
+      $("#agenciesS").show();
+      $("#agenciesY").hide();
+      $("#agenciesM").hide();
+    })
+
+  })
+</script>
+
+{% endblock %}

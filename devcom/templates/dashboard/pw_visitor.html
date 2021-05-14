@@ -1,0 +1,368 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>PhilRice Website</h2>
+            <small>Visitor</small>
+        </div>
+        <br>
+        <a href="{% url 'pw_table' %}">
+          <button class="btn btn-lg bg-deep-orange waves-effect waves-float" type="button" name="button">Website</button>
+        </a>
+        <a href="{% url 'pw_visitor_table' %}">
+          <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">Visitor</button>
+        </a>
+        <br>
+        <br>
+        <!-- Start of Content -->
+        <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>VISIT</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="visit" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>PAGEVIEWS</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="pageviews" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-6">
+              <div class="card">
+                  <div class="header">
+                      <h2>VISIT TREND</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="visit_trend" height="200"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-6">
+              <div class="card">
+                  <div class="header">
+                      <h2>PAGEVIEWS TREND</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="pageviews_trend" height="200"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>GENDER OF VISITORS</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="gender" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>PAGE AQUISITION</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="aquisition" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>DEVICED USED</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="device" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>SATISFACTION</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="satisfaction" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>TOP LOCATION</h2>
+                  </div>
+                  <div class="body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <thead>
+                                <tr>
+                                  <th>Count</th>
+                                  <th>Location</th>
+                                  <th>Month</th>
+                                  <th>Year</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                  <th>Count</th>
+                                  <th>Location</th>
+                                  <th>Month</th>
+                                  <th>Year</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                              {% for data in location %}
+                                <tr>
+                                  <td> {{ data.total }}</td>
+                                  <td> {{ data.location }}</td>
+                                  <td> {{ data.month }}</td>
+                                  <td> {{ data.year }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- End of Content -->
+    </div>
+</section>
+
+{% load static %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.bundle.js' %}"></script>
+<script src="{% static 'plugins/chartjs/Chart.min.js' %}"></script>
+
+<script type="text/javascript">
+  $(function () {
+      new Chart(document.getElementById("visit").getContext("2d"), getChartJs('visit'));
+      new Chart(document.getElementById("visit_trend").getContext("2d"), getChartJs('visit_trend'));
+      new Chart(document.getElementById("pageviews").getContext("2d"), getChartJs('pageviews'));
+      new Chart(document.getElementById("pageviews_trend").getContext("2d"), getChartJs('pageviews_trend'));
+      new Chart(document.getElementById("gender").getContext("2d"), getChartJs('gender'));
+      new Chart(document.getElementById("aquisition").getContext("2d"), getChartJs('aquisition'));
+      new Chart(document.getElementById("device").getContext("2d"), getChartJs('device'));
+      new Chart(document.getElementById("satisfaction").getContext("2d"), getChartJs('satisfaction'));
+      new Chart(document.getElementById("location").getContext("2d"), getChartJs('location'));
+  });
+
+  function getChartJs(type) {
+      var config = null;
+
+      if (type === 'visit') {
+          config = {
+              type: 'line',
+              data: {
+                labels: {{label|safe}},
+                datasets: [{
+                    label: "Visit",
+                    data: {{visit|safe}},
+                    backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      // update yearly
+      else if (type === 'visit_trend') {
+          config = {
+              type: 'line',
+              data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                  label: "2021",
+                  data: {{visit_trend_2021|safe}},
+                  borderColor: 'rgba(0, 188, 212, 0.75)',
+                  backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                  pointBorderColor: 'rgba(0, 188, 212, 0)',
+                  pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                  pointBorderWidth: 1
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      // update yearly end
+      else if (type === 'pageviews') {
+          config = {
+              type: 'line',
+              data: {
+                labels: {{label|safe}},
+                datasets: [{
+                  label: "Page Views",
+                  data: {{pageviews|safe}},
+                  backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      // update yearly
+      else if (type === 'pageviews_trend') {
+          config = {
+              type: 'line',
+              data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                  label: "2020",
+                  data: {{visit_trend_2021|safe}},
+                  borderColor: 'rgba(0, 188, 212, 0.75)',
+                  backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                  pointBorderColor: 'rgba(0, 188, 212, 0)',
+                  pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                  pointBorderWidth: 1
+                }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      // update yearly end
+      else if (type === 'gender') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Male",
+                      data: {{male|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Female",
+                      data: {{female|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Undefined",
+                      data: {{nosex|safe}},
+                      backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'aquisition') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Organic",
+                      data: {{organic|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Direct",
+                      data: {{direct|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Social",
+                      data: {{social|safe}},
+                      backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                  }, {
+                      label: "Referral",
+                      data: {{referral|safe}},
+                      backgroundColor: 'rgba(156, 39, 176, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'device') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Mobile",
+                      data: {{mobile|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Desktop",
+                      data: {{desktop|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }, {
+                      label: "Tablet",
+                      data: {{tablet|safe}},
+                      backgroundColor: 'rgba(255, 152, 0, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      else if (type === 'satisfaction') {
+          config = {
+              type: 'bar',
+              data: {
+                  labels: {{label|safe}},
+                  datasets: [{
+                      label: "Satisfied",
+                      data: {{syes|safe}},
+                      backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                  }, {
+                      label: "Not Satisfied",
+                      data: {{sno|safe}},
+                      backgroundColor: 'rgba(233, 30, 99, 0.8)'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: 'top',
+                },
+              }
+          }
+      }
+      return config;
+  }
+
+</script>
+
+{% endblock %}
