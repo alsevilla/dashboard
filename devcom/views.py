@@ -1592,7 +1592,16 @@ def radio(request):
 
     respondents = []
 
+    segment_trend_2017 = []
+    segment_trend_2018 = []
+    segment_trend_2019 = []
+    segment_trend_2020 = []
     segment_trend_2021 = []
+
+    respondents_trend_2017 = []
+    respondents_trend_2018 = []
+    respondents_trend_2019 = []
+    respondents_trend_2020 = []
     respondents_trend_2021 = []
 
     for data in radio_visitor.objects.raw('SELECT id, COUNT(topic) as ndetails, year FROM radio_visitor GROUP BY year ORDER BY year'):
@@ -1614,13 +1623,30 @@ def radio(request):
         nsatisfied.append(data.nsatisfied)
 
     radio_data = radio_visitor.objects.raw('SELECT id, topic, interviewee, sex, station, frequency, location, time, month, day, year FROM radio_visitor WHERE topic!="-" AND title!="-" ORDER BY time DESC, month DESC, day DESC, year DESC')
-
+    # update yearly
+    for data in radio_visitor.objects.raw(""" SELECT id, CONVERT(IF(topic!="-",COUNT(topic), COUNT(topic) - 1),UNSIGNED) as segment, month, year FROM `radio_visitor` WHERE year='2017' GROUP BY month """):
+        segment_trend_2017.append(data.segment)
+    for data in radio_visitor.objects.raw(""" SELECT id, CONVERT(IF(topic!="-",COUNT(topic), COUNT(topic) - 1),UNSIGNED) as segment, month, year FROM `radio_visitor` WHERE year='2018' GROUP BY month """):
+        segment_trend_2018.append(data.segment)
+    for data in radio_visitor.objects.raw(""" SELECT id, CONVERT(IF(topic!="-",COUNT(topic), COUNT(topic) - 1),UNSIGNED) as segment, month, year FROM `radio_visitor` WHERE year='2019' GROUP BY month """):
+        segment_trend_2019.append(data.segment)
+    for data in radio_visitor.objects.raw(""" SELECT id, CONVERT(IF(topic!="-",COUNT(topic), COUNT(topic) - 1),UNSIGNED) as segment, month, year FROM `radio_visitor` WHERE year='2020' GROUP BY month """):
+        segment_trend_2020.append(data.segment)
     for data in radio_visitor.objects.raw(""" SELECT id, CONVERT(IF(topic!="-",COUNT(topic), COUNT(topic) - 1),UNSIGNED) as segment, month, year FROM `radio_visitor` WHERE year='2021' GROUP BY month """):
         segment_trend_2021.append(data.segment)
 
+
+    for data in radio_upload.objects.raw(""" SELECT id, CONVERT(SUM(respondents), UNSIGNED) as respondents, month, year FROM `radio_upload` WHERE year='2017' GROUP BY month """):
+        respondents_trend_2017.append(data.respondents)
+    for data in radio_upload.objects.raw(""" SELECT id, CONVERT(SUM(respondents), UNSIGNED) as respondents, month, year FROM `radio_upload` WHERE year='2018' GROUP BY month """):
+        respondents_trend_2018.append(data.respondents)
+    for data in radio_upload.objects.raw(""" SELECT id, CONVERT(SUM(respondents), UNSIGNED) as respondents, month, year FROM `radio_upload` WHERE year='2019' GROUP BY month """):
+        respondents_trend_2019.append(data.respondents)
+    for data in radio_upload.objects.raw(""" SELECT id, CONVERT(SUM(respondents), UNSIGNED) as respondents, month, year FROM `radio_upload` WHERE year='2020' GROUP BY month """):
+        respondents_trend_2020.append(data.respondents)
     for data in radio_upload.objects.raw(""" SELECT id, CONVERT(SUM(respondents), UNSIGNED) as respondents, month, year FROM `radio_upload` WHERE year='2021' GROUP BY month """):
         respondents_trend_2021.append(data.respondents)
-
+    # update yearly end
     context = {
     'radio':radio,
     'label': label,
@@ -1633,7 +1659,16 @@ def radio(request):
     'radio_data': radio_data,
     'respondents':respondents,
 
+    'segment_trend_2017':segment_trend_2017,
+    'segment_trend_2018':segment_trend_2018,
+    'segment_trend_2019':segment_trend_2019,
+    'segment_trend_2020':segment_trend_2020,
     'segment_trend_2021':segment_trend_2021,
+
+    'respondents_trend_2017':respondents_trend_2017,
+    'respondents_trend_2018':respondents_trend_2018,
+    'respondents_trend_2019':respondents_trend_2019,
+    'respondents_trend_2020':respondents_trend_2020,
     'respondents_trend_2021':respondents_trend_2021,
     }
     return render(request, 'dashboard/radio.html', context)
@@ -1886,16 +1921,12 @@ def kp_table(request):
     Female=[]
     Datefortable=[]
 
-    distribute_yr2020_data=[]
     distribute_yr2021_data=[]
 
-    produce_yr2020_data=[]
     produce_yr2021_data=[]
 
-    request_yr2020_data = []
     request_yr2021_data = []
 
-    recipient_yr2020_data = []
     recipient_yr2021_data = []
 
     for data in kp_input.objects.raw('SELECT id, CONVERT(COUNT(title), UNSIGNED) as total, datefortable  FROM kp_input WHERE title!="-" GROUP BY datefortable ORDER BY datefortable'):
@@ -2034,23 +2065,15 @@ def kp_table(request):
 
     # need to add data annually
     # start
-    for distribute_yr2020 in kp_distribute.objects.raw(""" SELECT id, CONVERT(SUM(Quantity), UNSIGNED) as Quantity, Month, Year FROM `kp_distribute` WHERE Year="2020" GROUP BY Year, Month """):
-        distribute_yr2020_data.append(distribute_yr2020.Quantity)
     for distribute_yr2021 in kp_distribute.objects.raw(""" SELECT id, CONVERT(SUM(Quantity), UNSIGNED) as Quantity, Month, Year FROM `kp_distribute` WHERE Year="2021" GROUP BY Year, Month """):
         distribute_yr2021_data.append(distribute_yr2021.Quantity)
 
-    for produce_yr2020 in kp_input.objects.raw(""" SELECT id, CONVERT(IF(title="-", COUNT(title) -1, COUNT(title)),UNSIGNED) as total, datefortable, monthfortable FROM kp_input WHERE datefortable="2020" GROUP BY datefortable, monthfortable """):
-        produce_yr2020_data.append(produce_yr2020.total)
     for produce_yr2021 in kp_input.objects.raw(""" SELECT id, CONVERT(IF(title="-", COUNT(title) -1, COUNT(title)),UNSIGNED) as total, datefortable, monthfortable FROM kp_input WHERE datefortable="2021" GROUP BY datefortable, monthfortable """):
         produce_yr2021_data.append(produce_yr2021.total)
 
-    for request_yr2020 in kp_request.objects.raw(""" SELECT id, CONVERT(IF(purpose="-", COUNT(purpose) -1, COUNT(purpose)), UNSIGNED) as total, datefortable, monthfortable FROM kp_request WHERE datefortable="2020" GROUP BY datefortable,monthfortable """):
-        request_yr2020_data.append(request_yr2020.total)
     for request_yr2021 in kp_request.objects.raw(""" SELECT id, CONVERT(IF(purpose="-", COUNT(purpose) -1, COUNT(purpose)), UNSIGNED) as total, datefortable, monthfortable FROM kp_request WHERE datefortable="2021" GROUP BY datefortable,monthfortable """):
         request_yr2021_data.append(request_yr2021.total)
 
-    for recipient_yr2020 in kp_request.objects.raw(""" SELECT id, CONVERT(SUM(total),UNSIGNED) as total, datefortable, monthfortable FROM( SELECT id, CONVERT(SUM(recipient_male), UNSIGNED) AS total, datefortable, monthfortable FROM kp_request GROUP BY datefortable, monthfortable UNION ALL SELECT id, CONVERT(SUM(recipient_female), UNSIGNED) AS total, datefortable, monthfortable FROM kp_request GROUP BY datefortable, monthfortable ) as t WHERE datefortable="2020" GROUP BY datefortable, monthfortable """):
-        recipient_yr2020_data.append(recipient_yr2020.total)
     for recipient_yr2021 in kp_request.objects.raw(""" SELECT id, CONVERT(SUM(total),UNSIGNED) as total, datefortable, monthfortable FROM( SELECT id, CONVERT(SUM(recipient_male), UNSIGNED) AS total, datefortable, monthfortable FROM kp_request GROUP BY datefortable, monthfortable UNION ALL SELECT id, CONVERT(SUM(recipient_female), UNSIGNED) AS total, datefortable, monthfortable FROM kp_request GROUP BY datefortable, monthfortable ) as t WHERE datefortable="2021" GROUP BY datefortable, monthfortable """):
         recipient_yr2021_data.append(recipient_yr2021.total)
     # end
@@ -2109,13 +2132,9 @@ def kp_table(request):
                 'teacher' :teacher,
                 'others': others,
                 'top_location':top_location,
-                'distribute_yr2020_data':distribute_yr2020_data,
                 'distribute_yr2021_data':distribute_yr2021_data,
-                'produce_yr2020_data': produce_yr2020_data,
                 'produce_yr2021_data': produce_yr2021_data,
-                'request_yr2020_data': request_yr2020_data,
                 'request_yr2021_data' : request_yr2021_data,
-                'recipient_yr2020_data': recipient_yr2020_data,
                 'recipient_yr2021_data':recipient_yr2021_data,
     }
     return render(request,'dashboard/kp_tables.html',context)
@@ -2222,6 +2241,10 @@ def partner(request):
     regional = []
     community = []
 
+    engagement_trend_2017 = []
+    engagement_trend_2018 = []
+    engagement_trend_2019 = []
+    engagement_trend_2020 = []
     engagement_trend_2021 = []
 
     for data in partners.objects.raw('SELECT id, COUNT(engagement) as engagement, year FROM partners GROUP BY year ORDER BY year'):
@@ -2245,9 +2268,19 @@ def partner(request):
 
     partner_data = partners.objects.raw('SELECT id, partner, engagement, location, startDate, endDate, month, year FROM `partners` ORDER BY year, month')
 
+    # update yearly
+    for data in partners.objects.raw(""" SELECT id, CONVERT(COUNT(engagement), UNSIGNED) as engagement, year, month FROM `partners` WHERE year='2017' GROUP BY month"""):
+        engagement_trend_2017.append(data.engagement)
+    for data in partners.objects.raw(""" SELECT id, CONVERT(COUNT(engagement), UNSIGNED) as engagement, year, month FROM `partners` WHERE year='2018' GROUP BY month"""):
+        engagement_trend_2018.append(data.engagement)
+    for data in partners.objects.raw(""" SELECT id, CONVERT(COUNT(engagement), UNSIGNED) as engagement, year, month FROM `partners` WHERE year='2019' GROUP BY month"""):
+        engagement_trend_2019.append(data.engagement)
+    for data in partners.objects.raw(""" SELECT id, CONVERT(COUNT(engagement), UNSIGNED) as engagement, year, month FROM `partners` WHERE year='2020' GROUP BY month"""):
+        engagement_trend_2020.append(data.engagement)
     for data in partners.objects.raw(""" SELECT id, CONVERT(COUNT(engagement), UNSIGNED) as engagement, year, month FROM `partners` WHERE year='2021' GROUP BY month"""):
         engagement_trend_2021.append(data.engagement)
 
+    # update yealy end
     context = {
     'partner': partner,
     'label' : label,
@@ -2260,6 +2293,10 @@ def partner(request):
     'community' : community,
     'partner_data':partner_data,
 
+    'engagement_trend_2017':engagement_trend_2017,
+    'engagement_trend_2018':engagement_trend_2018,
+    'engagement_trend_2019':engagement_trend_2019,
+    'engagement_trend_2020':engagement_trend_2020,
     'engagement_trend_2021':engagement_trend_2021,
     }
     return render(request,'dashboard/partners.html',context)

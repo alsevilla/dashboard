@@ -200,7 +200,7 @@
 
           if (type === 'distribution_table') {
               config = {
-                  type: 'bar',
+                  type: 'line',
                   data: {
                     labels: {{distribute_year|safe}},
                     datasets: [{
@@ -219,7 +219,7 @@
           }
           else if (type === 'produced_table') {
               config = {
-                  type: 'bar',
+                  type: 'line',
                   data: {
                     labels: {{total_kp_date|safe}},
                     datasets: [{
@@ -238,7 +238,7 @@
           }
           else if (type === 'request_table') {
               config = {
-                  type: 'bar',
+                  type: 'line',
                   data: {
                     labels: {{total_request_date|safe}},
                     datasets: [{
@@ -257,7 +257,7 @@
           }
           else if (type === 'reciepients_table') {
               config = {
-                  type: 'bar',
+                  type: 'line',
                   data: {
                     labels: {{Total_datefortable|safe}},
                     datasets: [{
@@ -304,15 +304,8 @@
                   type: 'line',
                   data: {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                    datasets: [{
-                        label: "2020",
-                        data: {{distribute_yr2020_data|safe}},
-                        borderColor: 'rgba(0, 188, 212, 0.75)',
-                        backgroundColor: 'rgba(0, 188, 212, 0.3)',
-                        pointBorderColor: 'rgba(0, 188, 212, 0)',
-                        pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
-                        pointBorderWidth: 1
-                    },{
+                    datasets: [
+                    {
                         label: "2021",
                         data: {{distribute_yr2021_data|safe}},
                         borderColor: 'rgba(233, 30, 99, 0.75)',
@@ -335,15 +328,8 @@
                   type: 'line',
                   data: {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                    datasets: [{
-                        label: "2020",
-                        data: {{produce_yr2020_data|safe}},
-                        borderColor: 'rgba(0, 188, 212, 0.75)',
-                        backgroundColor: 'rgba(0, 188, 212, 0.3)',
-                        pointBorderColor: 'rgba(0, 188, 212, 0)',
-                        pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
-                        pointBorderWidth: 1
-                    },{
+                    datasets: [
+                    {
                         label: "2021",
                         data: {{produce_yr2021_data|safe}},
                         borderColor: 'rgba(233, 30, 99, 0.75)',
@@ -366,15 +352,8 @@
                   type: 'line',
                   data: {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                    datasets: [{
-                        label: "2020",
-                        data: {{request_yr2020_data|safe}},
-                        borderColor: 'rgba(0, 188, 212, 0.75)',
-                        backgroundColor: 'rgba(0, 188, 212, 0.3)',
-                        pointBorderColor: 'rgba(0, 188, 212, 0)',
-                        pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
-                        pointBorderWidth: 1
-                    },{
+                    datasets: [
+                    {
                         label: "2021",
                         data: {{request_yr2021_data|safe}},
                         borderColor: 'rgba(233, 30, 99, 0.75)',
@@ -397,15 +376,8 @@
                   type: 'line',
                   data: {
                     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                    datasets: [{
-                        label: "2020",
-                        data: {{recipient_yr2020_data|safe}},
-                        borderColor: 'rgba(0, 188, 212, 0.75)',
-                        backgroundColor: 'rgba(0, 188, 212, 0.3)',
-                        pointBorderColor: 'rgba(0, 188, 212, 0)',
-                        pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
-                        pointBorderWidth: 1
-                    },{
+                    datasets: [
+                    {
                         label: "2021",
                         data: {{recipient_yr2021_data|safe}},
                         borderColor: 'rgba(233, 30, 99, 0.75)',
