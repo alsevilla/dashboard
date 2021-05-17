@@ -75,7 +75,7 @@ class kp_input_stock_Form(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(kp_input_stock_Form, self).__init__(*args, **kwargs)
-        self.fields['kp'].queryset = self.fields['kp'].queryset.exclude(title="-")
+        self.fields['kp'].queryset = self.fields['kp'].queryset.order_by('title').exclude(title="-")
 
     class Meta:
         model = kp_input_stock
@@ -91,7 +91,7 @@ class kp_distribute_Form(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(kp_distribute_Form, self).__init__(*args, **kwargs)
-        self.fields['Kp'].queryset = self.fields['Kp'].queryset.exclude(title="-")
+        self.fields['Kp'].queryset = self.fields['Kp'].queryset.order_by('title').exclude(title="-")
 
     class Meta:
         model = kp_distribute
