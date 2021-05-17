@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'p!nrs1@x43^**ekc#9zm0wp-76v9i5@8f93w2)&c3-giwxyowd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = ['192.168.20.45','127.0.0.1']
 
