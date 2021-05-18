@@ -17,23 +17,33 @@
         <br>
         <!-- Start of Content -->
         <div class="row clearfix">
-          <div class="col-sm-6 col-xs-12">
+          <div class="col-sm-4 col-xs-12">
               <div class="card">
                   <div class="header">
                       <h2>VISIT</h2>
                   </div>
                   <div class="body">
-                      <canvas id="visit" height="200"></canvas>
+                      <canvas id="visit" height="150"></canvas>
                   </div>
               </div>
           </div>
-          <div class="col-sm-6 col-xs-12">
+          <div class="col-sm-4 col-xs-12">
               <div class="card">
                   <div class="header">
                       <h2>DOWNLOAD</h2>
                   </div>
                   <div class="body">
-                      <canvas id="download" height="200"></canvas>
+                      <canvas id="download" height="150"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-sm-4 col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>PAGE VIEWS</h2>
+                  </div>
+                  <div class="body">
+                      <canvas id="page" height="150"></canvas>
                   </div>
               </div>
           </div>
@@ -59,13 +69,14 @@
                   </div>
               </div>
           </div>
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-sm-12 col-xs-12">
               <div class="card">
                   <div class="header">
-                      <h2>PAGE VIEWS</h2>
+                      <h2>PAGEVIEWS TREND</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
                   </div>
                   <div class="body">
-                      <canvas id="page" height="100"></canvas>
+                      <canvas id="pageviews_trend" height="100"></canvas>
                   </div>
               </div>
           </div>
@@ -177,6 +188,7 @@
       new Chart(document.getElementById("download").getContext("2d"), getChartJs('download'));
       new Chart(document.getElementById("download_trend").getContext("2d"), getChartJs('download_trend'));
       new Chart(document.getElementById("page").getContext("2d"), getChartJs('page'));
+      new Chart(document.getElementById("pageviews_trend").getContext("2d"), getChartJs('pageviews_trend'));
       new Chart(document.getElementById("gender").getContext("2d"), getChartJs('gender'));
       new Chart(document.getElementById("device").getContext("2d"), getChartJs('device'));
       new Chart(document.getElementById("aquisition").getContext("2d"), getChartJs('aquisition'));
@@ -342,7 +354,7 @@
       // Update yearly end
       else if (type === 'page') {
           config = {
-              type: 'bar',
+              type: 'line',
               data: {
                   labels: {{label|safe}},
                   datasets: [{
@@ -359,6 +371,64 @@
               }
           }
       }
+      // Update yearly
+      else if (type === 'pageviews_trend') {
+          config = {
+              type: 'line',
+              data: {
+                  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                  datasets: [
+                  {
+                      label: "2017",
+                      data: {{pageviews_trend_2017|safe}},
+                      borderColor: 'rgba(158, 158, 158, 0.75)',
+                      backgroundColor: 'rgba(158, 158, 158, 0.3)',
+                      pointBorderColor: 'rgba(158, 158, 158, 0)',
+                      pointBackgroundColor: 'rgba(158, 158, 158, 0.9)',
+                      pointBorderWidth: 1
+                  },{
+                      label: "2018",
+                      data: {{pageviews_trend_2018|safe}},
+                      borderColor: 'rgba(255, 87, 34, 0.75)',
+                      backgroundColor: 'rgba(255, 87, 34, 0.3)',
+                      pointBorderColor: 'rgba(255, 87, 34, 0)',
+                      pointBackgroundColor: 'rgba(255, 87, 34, 0.9)',
+                      pointBorderWidth: 1
+                  },{
+                      label: "2019",
+                      data: {{pageviews_trend_2019|safe}},
+                      borderColor: 'rgba(0, 150, 136, 0.75)',
+                      backgroundColor: 'rgba(0, 150, 136, 0.3)',
+                      pointBorderColor: 'rgba(0, 150, 136, 0)',
+                      pointBackgroundColor: 'rgba(0, 150, 136, 0.9)',
+                      pointBorderWidth: 1
+                  },{
+                      label: "2020",
+                      data: {{pageviews_trend_2020|safe}},
+                      borderColor: 'rgba(0, 188, 212, 0.75)',
+                      backgroundColor: 'rgba(0, 188, 212, 0.3)',
+                      pointBorderColor: 'rgba(0, 188, 212, 0)',
+                      pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+                      pointBorderWidth: 1
+                  },{
+                    label: "2021",
+                    data: {{pageviews_trend_2021|safe}},
+                    borderColor: 'rgba(233, 30, 99, 0.75)',
+                    backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                    pointBorderColor: 'rgba(233, 30, 99, 0)',
+                    pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                    pointBorderWidth: 1
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  legend: {
+                position: '',
+                },
+              }
+          }
+      }
+      // Update yearly end
       else if (type === 'gender') {
           config = {
               type: 'bar',

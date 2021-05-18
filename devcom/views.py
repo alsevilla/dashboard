@@ -1323,14 +1323,19 @@ def pinoyrice_visitor(request):
 
     visit_trend_2017 = []
     download_trend_2017 = []
+    pageviews_trend_2017 = []
     visit_trend_2018 = []
     download_trend_2018 = []
+    pageviews_trend_2018 = []
     visit_trend_2019 = []
     download_trend_2019 = []
+    pageviews_trend_2019 = []
     visit_trend_2020 = []
     download_trend_2020 = []
+    pageviews_trend_2020 = []
     visit_trend_2021 = []
     download_trend_2021 = []
+    pageviews_trend_2021 = []
 
 
     for data in pr_visitor.objects.raw("""SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, CONVERT(SUM(pageviews),UNSIGNED) as pageviews, CONVERT(SUM(male),UNSIGNED) as male, CONVERT(SUM(female),UNSIGNED) as female, CONVERT(SUM(nosex),UNSIGNED)as nosex, CONVERT(SUM(age18to24),UNSIGNED) as age18to24, CONVERT(SUM(age25to34),UNSIGNED) as age25to34, CONVERT(SUM(age35to44),UNSIGNED) as age35to44, CONVERT(SUM(age45to54),UNSIGNED) as age45to54, CONVERT(SUM(age55to64),UNSIGNED) as age55to64, CONVERT(SUM(age65above),UNSIGNED) as age65above, CONVERT(SUM(noage),UNSIGNED) as noage, CONVERT(SUM(syes),UNSIGNED) as syes, CONVERT(SUM(sno),UNSIGNED) as sno, CONVERT(SUM(mobile),UNSIGNED) as mobile, CONVERT(SUM(desktop),UNSIGNED) as desktop, CONVERT(SUM(tablet),UNSIGNED) as tablet, CONVERT(SUM(organic),UNSIGNED) as organic, CONVERT(SUM(direct),UNSIGNED) as direct, CONVERT(SUM(social),UNSIGNED) as social, CONVERT(SUM(referral),UNSIGNED) as referral, year FROM pr_visitor GROUP BY year"""):
@@ -1361,21 +1366,26 @@ def pinoyrice_visitor(request):
     location = pr_visitor.objects.raw(""" SELECT id, location1 as location, SUM(nlocation1) as count, month, year FROM pr_visitor WHERE nlocation1!="0" GROUP BY month, year UNION ALL SELECT id, location2, SUM(nlocation2) as nlocation2, month, year FROM pr_visitor WHERE nlocation2!="0" GROUP BY month, year UNION ALL SELECT id, location3, SUM(nlocation3) as nlocation3, month, year FROM pr_visitor WHERE nlocation3!="0" GROUP BY month, year UNION ALL SELECT id, location4, SUM(nlocation4) as nlocation4, month, year FROM pr_visitor WHERE nlocation4!="0" GROUP BY month, year UNION ALL SELECT id, location5, SUM(nlocation5) as nlocation5, month, year FROM pr_visitor WHERE nlocation5!="0" GROUP BY month, year UNION ALL SELECT id, location6, SUM(nlocation6) as nlocation6, month, year FROM pr_visitor WHERE nlocation6!="0" GROUP BY month, year UNION ALL SELECT id, location7, SUM(nlocation7) as nlocation7, month, year FROM pr_visitor WHERE nlocation7!="0" GROUP BY month, year UNION ALL SELECT id, location8, SUM(nlocation8) as nlocation8, month, year FROM pr_visitor WHERE nlocation8="0" GROUP BY month, year UNION ALL SELECT id, location9, SUM(nlocation9) as nlocation9, month, year FROM pr_visitor WHERE nlocation9!="0" GROUP BY month, year UNION ALL SELECT id, location10, SUM(nlocation10) as nlocation10, month, year FROM pr_visitor WHERE nlocation10!="0" GROUP BY month, year ORDER BY year, month """)
 
     # update yearly
-    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, month, year FROM `pr_visitor` WHERE year='2017' GROUP BY month """):
+    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, CONVERT(SUM(pageviews), UNSIGNED) as pageviews, month, year FROM `pr_visitor` WHERE year='2017' GROUP BY month """):
         visit_trend_2017.append(data.visit)
         download_trend_2017.append(data.download)
-    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, month, year FROM `pr_visitor` WHERE year='2018' GROUP BY month """):
+        pageviews_trend_2017.append(data.pageviews)
+    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, CONVERT(SUM(pageviews), UNSIGNED) as pageviews, month, year FROM `pr_visitor` WHERE year='2018' GROUP BY month """):
         visit_trend_2018.append(data.visit)
         download_trend_2018.append(data.download)
-    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, month, year FROM `pr_visitor` WHERE year='2019' GROUP BY month """):
+        pageviews_trend_2018.append(data.pageviews)
+    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, CONVERT(SUM(pageviews), UNSIGNED) as pageviews, month, year FROM `pr_visitor` WHERE year='2019' GROUP BY month """):
         visit_trend_2019.append(data.visit)
         download_trend_2019.append(data.download)
-    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, month, year FROM `pr_visitor` WHERE year='2020' GROUP BY month """):
+        pageviews_trend_2019.append(data.pageviews)
+    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, CONVERT(SUM(pageviews), UNSIGNED) as pageviews, month, year FROM `pr_visitor` WHERE year='2020' GROUP BY month """):
         visit_trend_2020.append(data.visit)
         download_trend_2020.append(data.download)
-    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, month, year FROM `pr_visitor` WHERE year='2021' GROUP BY month """):
+        pageviews_trend_2020.append(data.pageviews)
+    for data in pr_visitor.objects.raw(""" SELECT id, CONVERT(SUM(visit),UNSIGNED) as visit, CONVERT(SUM(download),UNSIGNED) as download, CONVERT(SUM(pageviews), UNSIGNED) as pageviews, month, year FROM `pr_visitor` WHERE year='2021' GROUP BY month """):
         visit_trend_2021.append(data.visit)
         download_trend_2021.append(data.download)
+        pageviews_trend_2021.append(data.pageviews)
 
     # update yearly end
     context = {
@@ -1407,14 +1417,19 @@ def pinoyrice_visitor(request):
 
         'visit_trend_2017':visit_trend_2017,
         'download_trend_2017':download_trend_2017,
+        'pageviews_trend_2017':pageviews_trend_2017,
         'visit_trend_2018':visit_trend_2018,
         'download_trend_2018':download_trend_2018,
+        'pageviews_trend_2018':pageviews_trend_2018,
         'visit_trend_2019':visit_trend_2019,
         'download_trend_2019':download_trend_2019,
+        'pageviews_trend_2019':pageviews_trend_2019,
         'visit_trend_2020':visit_trend_2020,
         'download_trend_2020':download_trend_2020,
+        'pageviews_trend_2020':pageviews_trend_2020,
         'visit_trend_2021':visit_trend_2021,
         'download_trend_2021':download_trend_2021,
+        'pageviews_trend_2021':pageviews_trend_2021,
     }
     return render(request, 'dashboard/pr.html',context)
 def pinoyrice_upload(request):
@@ -2078,7 +2093,7 @@ def kp_table(request):
         recipient_yr2021_data.append(recipient_yr2021.total)
     # end
 
-    top_location = kp_request.objects.raw('SELECT id, datefortable, monthfortable, recipient_province, COUNT(id) as total FROM `kp_request` GROUP BY recipient_province, datefortable, monthfortable ORDER BY total DESC, monthfortable DESC, datefortable DESC')
+    top_location = kp_request.objects.raw('SELECT id, datefortable, monthfortable, recipient_province, COUNT(id) as total FROM `kp_request` WHERE purpose="-" AND recipient_province="-" GROUP BY recipient_province, datefortable, monthfortable ORDER BY total DESC, monthfortable DESC, datefortable DESC')
 
     context = { 'kps':kps,
                 'total_kp':total_kp,
