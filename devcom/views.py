@@ -1944,6 +1944,10 @@ def kp_table(request):
 
     recipient_yr2021_data = []
 
+    male_yr2021_data = []
+
+    female_yr2021_data = []
+
     for data in kp_input.objects.raw('SELECT id, CONVERT(COUNT(title), UNSIGNED) as total, datefortable  FROM kp_input WHERE title!="-" GROUP BY datefortable ORDER BY datefortable'):
         total_kp.append(data.total)
         total_kp_date.append(data.datefortable)
@@ -2080,20 +2084,26 @@ def kp_table(request):
 
     # need to add data annually
     # start
-    for distribute_yr2021 in kp_distribute.objects.raw(""" SELECT id, CONVERT(SUM(Quantity), UNSIGNED) as Quantity, Month, Year FROM `kp_distribute` WHERE Year="2021" GROUP BY Year, Month """):
-        distribute_yr2021_data.append(distribute_yr2021.Quantity)
+    for data in kp_distribute.objects.raw(""" SELECT id, CONVERT(SUM(Quantity), UNSIGNED) as Quantity, Month, Year FROM `kp_distribute` WHERE Year="2021" GROUP BY Year, Month """):
+        distribute_yr2021_data.append(data.Quantity)
 
-    for produce_yr2021 in kp_input.objects.raw(""" SELECT id, CONVERT(IF(title="-", COUNT(title) -1, COUNT(title)),UNSIGNED) as total, datefortable, monthfortable FROM kp_input WHERE datefortable="2021" GROUP BY datefortable, monthfortable """):
-        produce_yr2021_data.append(produce_yr2021.total)
+    for data in kp_input.objects.raw(""" SELECT id, CONVERT(IF(title="-", COUNT(title) -1, COUNT(title)),UNSIGNED) as total, datefortable, monthfortable FROM kp_input WHERE datefortable="2021" GROUP BY datefortable, monthfortable """):
+        produce_yr2021_data.append(data.total)
 
-    for request_yr2021 in kp_request.objects.raw(""" SELECT id, CONVERT(IF(purpose="-", COUNT(purpose) -1, COUNT(purpose)), UNSIGNED) as total, datefortable, monthfortable FROM kp_request WHERE datefortable="2021" GROUP BY datefortable,monthfortable """):
-        request_yr2021_data.append(request_yr2021.total)
+    for data in kp_request.objects.raw(""" SELECT id, CONVERT(IF(purpose="-", COUNT(purpose) -1, COUNT(purpose)), UNSIGNED) as total, datefortable, monthfortable FROM kp_request WHERE datefortable="2021" GROUP BY datefortable,monthfortable """):
+        request_yr2021_data.append(data.total)
 
-    for recipient_yr2021 in kp_request.objects.raw(""" SELECT id, CONVERT(SUM(total),UNSIGNED) as total, datefortable, monthfortable FROM( SELECT id, CONVERT(SUM(recipient_male), UNSIGNED) AS total, datefortable, monthfortable FROM kp_request GROUP BY datefortable, monthfortable UNION ALL SELECT id, CONVERT(SUM(recipient_female), UNSIGNED) AS total, datefortable, monthfortable FROM kp_request GROUP BY datefortable, monthfortable ) as t WHERE datefortable="2021" GROUP BY datefortable, monthfortable """):
-        recipient_yr2021_data.append(recipient_yr2021.total)
+    for data in kp_request.objects.raw(""" SELECT id, CONVERT(SUM(total),UNSIGNED) as total, datefortable, monthfortable FROM( SELECT id, CONVERT(SUM(recipient_male), UNSIGNED) AS total, datefortable, monthfortable FROM kp_request GROUP BY datefortable, monthfortable UNION ALL SELECT id, CONVERT(SUM(recipient_female), UNSIGNED) AS total, datefortable, monthfortable FROM kp_request GROUP BY datefortable, monthfortable ) as t WHERE datefortable="2021" GROUP BY datefortable, monthfortable """):
+        recipient_yr2021_data.append(data.total)
+
+    for data in kp_request.objects.raw(""" SELECT id, CONVERT(SUM(recipient_male), UNSIGNED) AS male, CONVERT(SUM(recipient_female), UNSIGNED) AS female, datefortable, monthfortable FROM kp_request WHERE datefortable="2021" GROUP BY datefortable, monthfortable """):
+        male_yr2021_data.append(data.male)
+        female_yr2021_data.append(data.female)
+
+
     # end
 
-    top_location = kp_request.objects.raw('SELECT id, datefortable, monthfortable, recipient_province, COUNT(id) as total FROM `kp_request` WHERE purpose="-" AND recipient_province="-" GROUP BY recipient_province, datefortable, monthfortable ORDER BY total DESC, monthfortable DESC, datefortable DESC')
+    top_location = kp_request.objects.raw('SELECT id, datefortable, monthfortable, recipient_province, COUNT(id) as total FROM `kp_request` WHERE purpose!="-" AND recipient_province!="-" GROUP BY recipient_province, datefortable, monthfortable ORDER BY total DESC, monthfortable DESC, datefortable DESC')
 
     context = { 'kps':kps,
                 'total_kp':total_kp,
@@ -2151,6 +2161,8 @@ def kp_table(request):
                 'produce_yr2021_data': produce_yr2021_data,
                 'request_yr2021_data' : request_yr2021_data,
                 'recipient_yr2021_data':recipient_yr2021_data,
+                'male_yr2021_data':male_yr2021_data,
+                'female_yr2021_data':female_yr2021_data,
     }
     return render(request,'dashboard/kp_tables.html',context)
 

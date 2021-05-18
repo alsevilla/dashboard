@@ -17,7 +17,7 @@
           <br>
         <!-- Start of Content -->
         <div class="row clearfix">
-          <div class="col-sm-6 col-xs-12">
+          <div class="col-sm-4 col-xs-12">
             <div class="card">
               <div class="header">
                 <h2>TOTAL DISTRIBUTED KP</h2>
@@ -27,7 +27,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-xs-12">
+          <div class="col-sm-4 col-xs-12">
             <div class="card">
               <div class="header">
                 <h2>TOTAL KP PRODUCED</h2>
@@ -37,7 +37,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-xs-12">
+          <div class="col-sm-4 col-xs-12">
             <div class="card">
               <div class="header">
                 <h2>TOTAL KP REQUEST</h2>
@@ -47,7 +47,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-xs-12">
+          <div class="col-sm-4 col-xs-12">
             <div class="card">
               <div class="header">
                 <h2>TOTAL RECIEPIENTS</h2>
@@ -57,13 +57,23 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-12">
+          <div class="col-sm-4 col-xs-12">
             <div class="card">
               <div class="header">
-                <h2>MALE AND FEMALE RATIO</h2>
+                <h2>MALE</h2>
               </div>
               <div class="body">
-                <canvas id="gender_table" height="100"></canvas>
+                <canvas id="male" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4 col-xs-12">
+            <div class="card">
+              <div class="header">
+                <h2>FEMALE</h2>
+              </div>
+              <div class="body">
+                <canvas id="female" height="200"></canvas>
               </div>
             </div>
           </div>
@@ -108,6 +118,28 @@
                   </div>
                   <div class="body">
                       <canvas id="recipient" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>MALE TREND</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="male_trend" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-12">
+              <div class="card">
+                  <div class="header">
+                      <h2>FEMALE TREND</h2>
+                      <small>Data needs to be initalize to properly point to the specific month [Yearly Update]</small>
+                  </div>
+                  <div class="body">
+                      <canvas id="female_trend" height="100"></canvas>
                   </div>
               </div>
           </div>
@@ -186,7 +218,10 @@
           new Chart(document.getElementById("produced_table").getContext("2d"), getChartJs('produced_table'));
           new Chart(document.getElementById("request_table").getContext("2d"), getChartJs('request_table'));
           new Chart(document.getElementById("reciepients_table").getContext("2d"), getChartJs('reciepients_table'));
-          new Chart(document.getElementById("gender_table").getContext("2d"), getChartJs('gender_table'));
+          new Chart(document.getElementById("male").getContext("2d"), getChartJs('male'));
+          new Chart(document.getElementById("female").getContext("2d"), getChartJs('female'));
+          new Chart(document.getElementById("male_trend").getContext("2d"), getChartJs('male_trend'));
+          new Chart(document.getElementById("female_trend").getContext("2d"), getChartJs('female_trend'));
           new Chart(document.getElementById("distribute_kp").getContext("2d"), getChartJs('distribute_kp'));
           new Chart(document.getElementById("produced_kp").getContext("2d"), getChartJs('produced_kp'));
           new Chart(document.getElementById("request_kp").getContext("2d"), getChartJs('request_kp'));
@@ -274,16 +309,31 @@
                   }
               }
           }
-          else if (type === 'gender_table') {
+          else if (type === 'male') {
               config = {
-                  type: 'bar',
+                  type: 'line',
                   data: {
                     labels: {{Datefortable|safe}},
                     datasets: [{
                         label: "Male",
                         data: {{Male|safe}},
                         backgroundColor: 'rgba( 33, 150, 243, 0.8)'
-                    }, {
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: '',
+                    },
+                  }
+              }
+          }
+          else if (type === 'female') {
+              config = {
+                  type: 'line',
+                  data: {
+                    labels: {{Datefortable|safe}},
+                    datasets: [{
                           label: "Female",
                           data: {{Female|safe}},
                           backgroundColor: 'rgba( 244, 67, 54, 0.8)'
@@ -292,7 +342,7 @@
                   options: {
                       responsive: true,
                       legend: {
-                    position: 'top',
+                    position: '',
                     },
                   }
               }
@@ -380,6 +430,54 @@
                     {
                         label: "2021",
                         data: {{recipient_yr2021_data|safe}},
+                        borderColor: 'rgba(233, 30, 99, 0.75)',
+                        backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                        pointBorderColor: 'rgba(233, 30, 99, 0)',
+                        pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                        pointBorderWidth: 1
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: 'top',
+                    },
+                  }
+              }
+          }
+          else if (type === 'male_trend') {
+              config = {
+                  type: 'line',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [
+                    {
+                        label: "2021",
+                        data: {{male_yr2021_data|safe}},
+                        borderColor: 'rgba(233, 30, 99, 0.75)',
+                        backgroundColor: 'rgba(233, 30, 99, 0.3)',
+                        pointBorderColor: 'rgba(233, 30, 99, 0)',
+                        pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+                        pointBorderWidth: 1
+                    }]
+                  },
+                  options: {
+                      responsive: true,
+                      legend: {
+                    position: 'top',
+                    },
+                  }
+              }
+          }
+          else if (type === 'female_trend') {
+              config = {
+                  type: 'line',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [
+                    {
+                        label: "2021",
+                        data: {{female_yr2021_data|safe}},
                         borderColor: 'rgba(233, 30, 99, 0.75)',
                         backgroundColor: 'rgba(233, 30, 99, 0.3)',
                         pointBorderColor: 'rgba(233, 30, 99, 0)',
