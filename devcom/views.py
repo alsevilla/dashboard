@@ -1077,15 +1077,15 @@ def philricewebsite(request):
     pw_data_photonews = pw.objects.raw('SELECT id, title, topic, fascinated, amused, excited, angry, sad, bored, date FROM pw WHERE classification="photonews" ORDER BY date')
 
 
-    for data in pw.objects.raw(""" SELECT id, CONVERT(SUM(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2017' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2017' GROUP BY month """):
         stories_trend_2017.append(data.stories)
-    for data in pw.objects.raw(""" SELECT id, CONVERT(SUM(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2018' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2018' GROUP BY month """):
         stories_trend_2018.append(data.stories)
-    for data in pw.objects.raw(""" SELECT id, CONVERT(SUM(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2019' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2019' GROUP BY month """):
         stories_trend_2019.append(data.stories)
-    for data in pw.objects.raw(""" SELECT id, CONVERT(SUM(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2020' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2020' GROUP BY month """):
         stories_trend_2020.append(data.stories)
-    for data in pw.objects.raw(""" SELECT id, CONVERT(SUM(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2021' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2021' GROUP BY month """):
         stories_trend_2021.append(data.stories)
 
     context = {

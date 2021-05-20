@@ -31,14 +31,14 @@
                           <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                               <thead>
                                   <tr>
-                                    <th>ID</th>
+                                    <th>Date</th>
                                     <th>Details</th>
                                     <th>Actions</th>
                                   </tr>
                               </thead>
                               <tfoot>
                                   <tr>
-                                    <th>ID</th>
+                                    <th>Date</th>
                                     <th>Details</th>
                                     <th>Actions</th>
                                   </tr>
@@ -46,8 +46,8 @@
                               <tbody>
                                 {% for texts in text %}
                                   <tr>
-                                    <td>{{ texts.id }}</td>
-                                    <td>Details for PhilRice Website for <b> {{ texts.month }} - {{ texts.year }}  </b></td>
+                                    <td>{{ {{ texts.date| date:"SHORT_DATE_FORMAT" }} }}</td>
+                                    <td>{{ texts.title }}</td>
                                     <td> <a href="{% url 'pw_edit' texts.id %}"><button class="btn btn-xs btn-success" type="button"><i class="material-icons">mode_edit</i></button></a>
                                            <a href="{% url 'pw_delete' texts.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
                                   </tr>

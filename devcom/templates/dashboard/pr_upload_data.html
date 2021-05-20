@@ -5,7 +5,7 @@
 <section class ="content">
     <div class ="container-fluid">
         <div class="block-header">
-            <h2>PhilRice Website</h2>
+            <h2>PinoyRice</h2>
             <br>
             <a href="{% url 'pr_visitor' %}">
               <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">Visitor</button>
@@ -46,8 +46,8 @@
                               <tbody>
                                 {% for texts in text %}
                                   <tr>
-                                    <td>{{ texts.id }}</td>
-                                    <td>PRKB Upload Data on <b>{{ texts.month }} - {{ texts.year }}</b></td>
+                                    <td>{{ texts.month }} - {{ texts.year }}</td>
+                                    <td>{{ texts.title }}</td>
                                     <td> <a href="{% url 'pr_upload_edit' texts.id %}"><button class="btn btn-xs btn-success" type="button"><i class="material-icons">mode_edit</i></button></a>
                                            <a href="{% url 'pr_upload_delete' texts.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
                                   </tr>
