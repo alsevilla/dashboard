@@ -638,6 +638,7 @@ class kp_distribute(models.Model):
     Quantity = models.IntegerField()
     Month = models.IntegerField(blank=True, null=True)
     Year = models.IntegerField(blank=True, null=True)
+    Date = models.DateField(blank=True, null=True)
 
 
     class Meta:

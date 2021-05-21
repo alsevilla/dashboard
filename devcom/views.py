@@ -1783,6 +1783,19 @@ def kps_delete_stock(request, pk):
     context = { 'url': url}
     return render(request, 'dashboard/delete.html', context)
 
+def kp_stock_transaction(request, pk):
+    input_menu_toggle = 'active'
+    kp_inputs = 'active'
+
+    kp_stock_transaction = kp_input_stock.objects.filter(kp_id=pk).exclude(stocks=0)
+
+    kp_distribute_transaction = kp_distribute.objects.filter(Kp_id=pk).exclude(Quantity=0)
+
+    context = { 'kp_stock_transaction':kp_stock_transaction,
+                'kp_distribute_transaction':kp_distribute_transaction}
+
+    return render(request, 'dashboard/kp_stocks_transactions.html', context)
+
 
 def data_input_kp_recipient(request):
     input_menu_toggle = 'active'
@@ -1834,6 +1847,7 @@ def kp_recipient_delete(request, pk):
 def kp_distribution(request, pk):
     data = kp_request.objects.get(pk=pk)
     requestee = data.requester_name
+    date = data.date
     year = data.datefortable
     month = data.monthfortable
 
@@ -1851,7 +1865,7 @@ def kp_distribution(request, pk):
         # month_data = request.POST.get('month')
 
         cursor = connections['default'].cursor()
-        cursor.execute("INSERT INTO kp_distribute(`request_id`,`kp_id`,`quantity`,`year`,`month`) VALUES( %s, %s, %s, %s, %s )", [request_data, kp_data,quantity_data,year, month])
+        cursor.execute("INSERT INTO kp_distribute(`Request_id`,`Kp_id`,`Quantity`, `Date`, `Year`,`Month`) VALUES( %s, %s, %s, %s, %s , %s)", [request_data, kp_data,quantity_data, date, year, month])
 
     context = { 'kp_distribute_form':kp_distribute_form,
                 'primary':primary,

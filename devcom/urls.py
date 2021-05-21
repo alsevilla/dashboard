@@ -59,6 +59,7 @@ urlpatterns = [
     path('kp_edit/<str:pk>', views.kps_edit, name='kp_edit'),
     path('kp_delete/<str:pk>', views.kps_delete, name='kp_delete'),
     path('data_input_kp_stock', views.data_input_kp_stock, name='data_input_kp_stock'),
+    path('kp_stocks_transactions/<str:pk>', views.kp_stock_transaction, name='kp_stocks_transactions'),
     path('kp_edit_stock/<str:pk>', views.kps_edit_stock, name='kp_edit_stock'),
     path('kp_delete_stock/<str:pk>', views.kps_delete_stock, name='kp_delete_stock'),
     path('data_input_kp_recipient', views.data_input_kp_recipient, name='data_input_kp_recipient'),

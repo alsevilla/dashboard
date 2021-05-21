@@ -1,0 +1,119 @@
+{% extends 'dashboard/main.html' %}
+{% block content %}
+<form class="" action="" method="POST">
+  {% load widget_tweaks %}
+  {% load mathfilters %}
+  {% csrf_token %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+          <button class="pull-right btn btn-circle-lg btn-primary waves-effect waves-circle waves-float" type="submit" name = "submit">
+            <i class="material-icons">done</i>
+          </button>
+          <h2>Input Data</h2>
+          <small>Knowledge Products</small>
+          <br>
+          <br>
+          <a href="{% url 'data_input_kp' %}">
+            <button class="btn btn-lg bg-red waves-effect waves-float" type="button" name="button">Manage KPs</button>
+          </a>
+          <a href="{% url 'data_input_kp_stock' %}">
+            <button class="btn btn-lg bg-teal waves-effect waves-float" type="button" name="button">Add KPs Stocks</button>
+          </a>
+          <a href="{% url 'data_input_kp_recipient' %}">
+            <button class="btn btn-lg bg-deep-purple waves-effect waves-float" type="button" name="button">Manage Recipients</button>
+          </a>
+          </div>
+        <!-- Start of Content -->
+
+        <div class="row clearfix">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            INCOMING
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                      <th>Date Stock</th>
+                                      <th>Title</th>
+                                      <th>Stocks</th>
+                                      <th>Printing Press</th>
+                                      <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                      <th>Date Stock</th>
+                                      <th>Title</th>
+                                      <th>Stocks</th>
+                                      <th>Printing Press</th>
+                                      <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                  {% for data in kp_stock_transaction %}
+                                    <tr>
+                                      <td> {{ data.date_recorded | date:"SHORT_DATE_FORMAT" }}</td>
+                                      <td>{{ data.kp }}</td>
+                                      <td><a href="{% url 'kp_edit_stock' data.id %}">{{ data.stocks }} </a></td>
+                                      <td>{{ data.printing_press}}</td>
+                                      <td><a href="{% url 'kp_delete_stock' data.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            OUTGOING
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                      <th>Date Distribute</th>
+                                      <th>Title</th>
+                                      <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                      <th>Date Distribute</th>
+                                      <th>Title</th>
+                                      <th>Quantity</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                  {% for data in kp_distribute_transaction %}
+                                    <tr>
+                                      <td> {{ data.Date | date:"SHORT_DATE_FORMAT" }}</td>
+                                      <td>{{ data.Kp }}</td>
+                                      <td>{{ data.Quantity }} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End of Content -->
+    </div>
+</section>
+</form>
+
+{% endblock %}

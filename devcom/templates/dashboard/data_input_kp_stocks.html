@@ -93,7 +93,6 @@
                                       <th>Title</th>
                                       <th>Stocks</th>
                                       <th>Printing Press</th>
-                                      <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -102,18 +101,15 @@
                                       <th>Title</th>
                                       <th>Stocks</th>
                                       <th>Printing Press</th>
-                                      <th>Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                   {% for kp_stocks in kp_stock %}
                                     <tr>
                                       <td> {{ kp_stocks.date_recorded | date:"SHORT_DATE_FORMAT" }}</td>
-                                      <td>{{ kp_stocks.kp }}</td>
+                                      <td><a href="{% url 'kp_stocks_transactions' kp_stocks.id %}"> {{ kp_stocks.kp }}</a></td>
                                       <td>{{ kp_stocks.stock|sub:kp_stocks.distribute }} </td>
                                       <td>{{ kp_stocks.printing_press}}</td>
-                                      <td> <a href="{% url 'kp_edit_stock' kp_stocks.id %}"><button class="btn btn-xs btn-success" type="button"><i class="material-icons">mode_edit</i></button></a>
-                                             <a href="{% url 'kp_delete_stock' kp_stocks.id %}"><button class="btn btn-xs btn-danger" type="button"><i class="material-icons">delete</i></button></a></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
