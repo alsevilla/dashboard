@@ -1054,7 +1054,7 @@ def philricewebsite(request):
     stories_trend_2020=[]
     stories_trend_2021=[]
 
-    for data in pw.objects.raw('SELECT id, CONVERT(SUM(fascinated),UNSIGNED) as fascinated, CONVERT(SUM(amused),UNSIGNED) as amused, CONVERT(SUM(excited),UNSIGNED) as excited, CONVERT(SUM(angry),UNSIGNED) as angry, CONVERT(SUM(sad),UNSIGNED) as sad, CONVERT(SUM(bored),UNSIGNED) as bored, CONCAT(month, "/", year ) as monthyear FROM pw GROUP BY month, year ORDER BY year, month'):
+    for data in pw.objects.raw('SELECT id, CONVERT(SUM(fascinated),UNSIGNED) as fascinated, CONVERT(SUM(amused),UNSIGNED) as amused, CONVERT(SUM(excited),UNSIGNED) as excited, CONVERT(SUM(angry),UNSIGNED) as angry, CONVERT(SUM(sad),UNSIGNED) as sad, CONVERT(SUM(bored),UNSIGNED) as bored, CONCAT(month, "/", year ) as monthyear, year, month FROM pw WHERE AND title!="-" GROUP BY month, year ORDER BY year ASC, month ASC'):
         label.append(data.monthyear)
         fascinated.append(data.fascinated)
         amused.append(data.amused)
@@ -1063,29 +1063,29 @@ def philricewebsite(request):
         sad.append(data.sad)
         bored.append(data.bored)
 
-    for data in pw.objects.raw('SELECT id, COUNT(topic) as news FROM pw WHERE classification = "news" GROUP BY month, year ORDER BY year, month'):
+    for data in pw.objects.raw('SELECT id, COUNT(topic) as news, month, year FROM pw WHERE classification = "news" AND title!="-" GROUP BY month, year ORDER BY year ASC, month ASC'):
         news.append(data.news)
 
-    for data in pw.objects.raw('SELECT id, COUNT(topic) as photonews FROM pw WHERE classification = "photonews" GROUP BY month, year ORDER BY year, month'):
+    for data in pw.objects.raw('SELECT id, COUNT(topic) as photonews, month, year FROM pw WHERE classification = "photonews" AND title!="-" GROUP BY month, year ORDER BY year ASC, month ASC'):
         photonews.append(data.photonews)
 
-    for data in pw.objects.raw('SELECT id, COUNT(topic) as feature FROM pw WHERE classification = "features" GROUP BY month, year ORDER BY year, month'):
+    for data in pw.objects.raw('SELECT id, COUNT(topic) as feature, month, year FROM pw WHERE classification = "features" AND title!="-" GROUP BY month, year ORDER BY year ASC, month ASC'):
         feature.append(data.feature)
 
-    pw_data_features = pw.objects.raw('SELECT id, title, topic, fascinated, amused, excited, angry, sad, bored, date FROM pw WHERE classification="features" ORDER BY date')
-    pw_data_news = pw.objects.raw('SELECT id, title, topic, fascinated, amused, excited, angry, sad, bored, date FROM pw WHERE classification="news" ORDER BY date')
-    pw_data_photonews = pw.objects.raw('SELECT id, title, topic, fascinated, amused, excited, angry, sad, bored, date FROM pw WHERE classification="photonews" ORDER BY date')
+    pw_data_features = pw.objects.raw('SELECT id, title, topic, fascinated, amused, excited, angry, sad, bored, date FROM pw WHERE classification="features" AND title!="-" ORDER BY date')
+    pw_data_news = pw.objects.raw('SELECT id, title, topic, fascinated, amused, excited, angry, sad, bored, date FROM pw WHERE classification="news" AND title!="-" ORDER BY date')
+    pw_data_photonews = pw.objects.raw('SELECT id, title, topic, fascinated, amused, excited, angry, sad, bored, date FROM pw WHERE classification="photonews" AND title!="-" ORDER BY date')
 
 
-    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2017' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(IF(topic="-",COUNT(topic) - 1, COUNT(topic)),UNSIGNED) as stories, month, year FROM `pw` WHERE year='2017' GROUP BY month """):
         stories_trend_2017.append(data.stories)
-    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2018' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(IF(topic="-",COUNT(topic) - 1, COUNT(topic)),UNSIGNED) as stories, month, year FROM `pw` WHERE year='2018' GROUP BY month """):
         stories_trend_2018.append(data.stories)
-    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2019' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(IF(topic="-",COUNT(topic) - 1, COUNT(topic)), UNSIGNED) as stories, month, year FROM `pw` WHERE year='2019' GROUP BY month """):
         stories_trend_2019.append(data.stories)
-    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2020' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(IF(topic="-",COUNT(topic) - 1, COUNT(topic)), UNSIGNED) as stories, month, year FROM `pw` WHERE year='2020' GROUP BY month """):
         stories_trend_2020.append(data.stories)
-    for data in pw.objects.raw(""" SELECT id, CONVERT(COUNT(topic) - 1,UNSIGNED) as stories, month, year FROM `pw` WHERE year='2021' GROUP BY month """):
+    for data in pw.objects.raw(""" SELECT id, CONVERT(IF(topic="-",COUNT(topic) - 1, COUNT(topic)), UNSIGNED) as stories, month, year FROM `pw` WHERE year='2021' GROUP BY month """):
         stories_trend_2021.append(data.stories)
 
     context = {
