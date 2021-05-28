@@ -1054,7 +1054,7 @@ def philricewebsite(request):
     stories_trend_2020=[]
     stories_trend_2021=[]
 
-    for data in pw.objects.raw('SELECT id, CONVERT(SUM(fascinated),UNSIGNED) as fascinated, CONVERT(SUM(amused),UNSIGNED) as amused, CONVERT(SUM(excited),UNSIGNED) as excited, CONVERT(SUM(angry),UNSIGNED) as angry, CONVERT(SUM(sad),UNSIGNED) as sad, CONVERT(SUM(bored),UNSIGNED) as bored, CONCAT(month, "/", year ) as monthyear, year, month FROM pw WHERE AND title!="-" GROUP BY month, year ORDER BY year ASC, month ASC'):
+    for data in pw.objects.raw('SELECT id, CONVERT(SUM(fascinated),UNSIGNED) as fascinated, CONVERT(SUM(amused),UNSIGNED) as amused, CONVERT(SUM(excited),UNSIGNED) as excited, CONVERT(SUM(angry),UNSIGNED) as angry, CONVERT(SUM(sad),UNSIGNED) as sad, CONVERT(SUM(bored),UNSIGNED) as bored, CONCAT(month, "/", year ) as monthyear, year, month FROM pw WHERE title!="-" GROUP BY month, year ORDER BY year ASC, month ASC'):
         label.append(data.monthyear)
         fascinated.append(data.fascinated)
         amused.append(data.amused)

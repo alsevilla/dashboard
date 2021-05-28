@@ -118,8 +118,8 @@
                                     </div>
                                 </div>
                             </div>
-                            {% render_field pw_form.month class="form-control" type="hidden"%}
-                            {% render_field pw_form.year class="form-control" type="hidden"%}
+                            {% render_field pw_form.month class="form-control" %}
+                            {% render_field pw_form.year class="form-control" %}
                         </div>
                       <!-- end of body -->
                     </div>
@@ -141,7 +141,11 @@
     var year = dateObj.getFullYear();
     var month = dateObj.getMonth() + 1;
 
-    $("#id_month").val(month);
+    if (month < 10){
+    $("#id_month").val("0" + month);
+    } else {
+    $("#id_month").val(month)
+    }
     $("#id_year").val(year);
   })
 </script>
